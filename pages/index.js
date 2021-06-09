@@ -1,50 +1,36 @@
 import Head from 'next/head'
+import { DatePicker } from 'antd';
+import 'antd/dist/antd.css';
+import {AlertTwoTone} from '@ant-design/icons';
+import Link from 'next/link'
 
 export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Registro de problemas</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Registro de problemas
+          <AlertTwoTone twoToneColor="red"></AlertTwoTone>
         </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
+      <DatePicker></DatePicker> 
+      
         <div className="grid">
           <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+            <h3>Registra tu problema &rarr;</h3>
+            <p>En esta sección podrás registrar tu problema a solucionar</p>
           </a>
 
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <Link href="/login/login-nat" >
+            <a className="card"> <h3>Administrador &rarr;</h3>
+            <p>Acceso solo para Nati </p>
+            </a>     
+          </Link>    
+          
         </div>
       </main>
 
@@ -116,7 +102,9 @@ export default function Home() {
         .title {
           margin: 0;
           line-height: 1.15;
-          font-size: 4rem;
+          font-size: 3rem;
+
+
         }
 
         .title,
