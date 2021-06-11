@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { DatePicker } from 'antd';
 import 'antd/dist/antd.css';
-import {AlertTwoTone} from '@ant-design/icons';
+import { AlertTwoTone } from '@ant-design/icons';
 import Link from 'next/link'
 
 export default function Home() {
@@ -17,20 +17,20 @@ export default function Home() {
           Registro de problemas
           <AlertTwoTone twoToneColor="red"></AlertTwoTone>
         </h1>
-      <DatePicker></DatePicker> 
-      
+        <DatePicker></DatePicker>
+
         <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
+          <a href="/crud/issueForm" className="card">
             <h3>Registra tu problema &rarr;</h3>
             <p>En esta sección podrás registrar tu problema a solucionar</p>
           </a>
 
           <Link href="/login/login-nat" >
             <a className="card"> <h3>Administrador &rarr;</h3>
-            <p>Acceso solo para Nati </p>
-            </a>     
-          </Link>    
-          
+              <p>Acceso solo para Nati </p>
+            </a>
+          </Link>
+
         </div>
       </main>
 

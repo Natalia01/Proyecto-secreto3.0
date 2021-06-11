@@ -1,0 +1,88 @@
+.app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 10px;
+  }
+  .form {
+    border: 2px solid rgb(0, 153, 255);
+    border-radius: 5px;
+    padding: 10px;
+    display: grid;
+    text-align: left;
+  }
+  .CSName {
+    
+    border: 1px solid lightgray;
+    padding: 10px;
+  }
+  .radioButtons {
+    border: 1px solid lightgray;
+    padding: 10px;
+  }
+  .name {
+    display: inline-block;
+    border: 1px solid lightgray;
+    padding: 10px;
+  }
+  
+  .description {
+    display: flex;
+    align-items: center;
+    border: 1px solid lightgray;
+    padding: 10px;
+  }
+
+  /* radio buttons */
+
+.radioBtn {
+  display: inline-flex;
+  align-items: center;  
+}
+.radioBtn:hover{
+  cursor: pointer;
+}
+.radioSpan {
+  --color-radio: rgb(77, 190, 255);
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  border: 1px solid var(--color-radio);
+  border-radius: 50%;
+  position: relative;
+}
+.radioSpan::after {
+  opacity: 0;
+  transition: all 0.3s ease;
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-radio);
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+.radioSpan:hover{
+  background-color: var(--color-radio);
+  opacity: 0.6;
+}
+.radioBtn:not(:last-child) {
+  margin-right: 10px;
+}
+.radioSpanlime {
+  --color-radio: lime;
+}
+.radioSpanyellow {
+  --color-radio: yellow;
+}
+.radioSpanorange {
+  --color-radio: orange;
+}
+.radioSpanred {
+  --color-radio: red;
+}
+.radioSpan.radioSpanSelected::after {
+  opacity: 1;
+}
