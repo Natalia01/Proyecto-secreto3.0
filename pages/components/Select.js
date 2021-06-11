@@ -1,7 +1,8 @@
-import { Select, Option } from 'antd'
+import { Select } from 'antd'
 import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
-
+import styles from '../../styles/Panel.module.css'
+const { Option } = Select;
 const nameList = [
     "User 0",
     "User 1",
@@ -12,22 +13,17 @@ const nameList = [
     "User 6",
     "User 7"
 ]
-function Selector({ onStateChange }) {
-
-    const [nameState, setNameState] = useState('')
-    const handleChange = (e, onStateChange) => {
-        onStateChange(e)
-    }
+function Selector({ onSetSelected, selectState }) {
     return (
         <Select
             placeholder="Nombre"
-            value={nameState}
-            onChange={(e) => onStateChange(e)}
-            style={{ width: 120 }}>
+            value={selectState}
+            onChange={onSetSelected}
+            className={styles.selector}>
             {
                 nameList.map((name) => {
                     return (
-                        <option key={name} value={name}>{name}</option>
+                        <Option key={name} value={name}>{name}</Option>
                     )
                 })
             }

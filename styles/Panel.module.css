@@ -1,3 +1,7 @@
+.h1 {
+  margin-left: 20%;
+}
+
 .app {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -7,23 +11,37 @@
   .form {
     border: 2px solid rgb(0, 153, 255);
     border-radius: 5px;
-    padding: 10px;
+    padding: 0px;
     display: grid;
     text-align: left;
   }
-  .CSName {
-    
+  .selectDiv {    
     border: 1px solid lightgray;
     padding: 10px;
   }
+  .selector {
+    width: 160px;
+    border-radius: 3px;
+  }
   .radioButtons {
+    display: inline-flex;
     border: 1px solid lightgray;
     padding: 10px;
   }
   .name {
-    display: inline-block;
+    display: inline-flex;
     border: 1px solid lightgray;
     padding: 10px;
+  }
+  .nameInput {    
+    margin-left: 10px;
+    width: 160px;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+  }
+  .nameInput:focus {
+    border: 1px solid rgb(0, 153, 255);
+    outline: 0px;
   }
   
   .description {
@@ -36,6 +54,7 @@
   /* radio buttons */
 
 .radioBtn {
+  margin-left: 15px;
   display: inline-flex;
   align-items: center;  
 }
@@ -64,7 +83,7 @@
   left:50%;
   transform: translate(-50%,-50%);
 }
-.radioSpan:hover{
+.radioSpan:hover:not(.radioSpanSelected){
   background-color: var(--color-radio);
   opacity: 0.6;
 }

@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import styles from '../../styles/Panel.module.css'
-const nameApp = () => {
+const NameApp = () => {
     const [nameState, setNameState] = useState('')
     const handleChange = (value) => {
         setNameState(value)
     }
     return (
         <div className={styles.nameApp}>
-            <input type="text" onChange={handleChange} style={{ width: 60 }} />
+            <input className={styles.nameInput} type="text" onChange={handleChange} />
         </div>
     );
 };
-export default nameApp;
+export default NameApp;
 

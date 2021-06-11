@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import styles from '../../styles/Panel.module.css'
 import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
-const RadioApp = () => {
+const RadioApp = ({ onRadio }) => {
     const radioList = [
         {
             value: 1,
@@ -23,17 +23,18 @@ const RadioApp = () => {
             type: "red"
         }
     ]
-    const [priorityState, setPriorityState] = useState('0')
+    const [priorState, setPriorState] = useState('0')
     const handleChange = (value) => {
-        setPriorityState(value)
+        onRadio(value)
+        setPriorState(value)
     }
     return (
         <>
-            <div className={styles.radioGroup}>
+            <div value={priorState} className={styles.radioGroup}>
                 {radioList.map(({ value, name, type }) => {
                     return (
                         <label className={styles.radioBtn} onClick={() => handleChange(value)}>
-                            <span className={cx({ radioSpan: true, radioSpanSelected: (priorityState === value) ? true : false, [`radioSpan${type}`]: true })} />
+                            <span className={cx({ radioSpan: true, radioSpanSelected: (priorState === value) ? true : false, [`radioSpan${type}`]: true })} />
                             {name}
                         </label>
                     )
