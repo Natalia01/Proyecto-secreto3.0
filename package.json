@@ -10,6 +10,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "antd": "^4.16.2",
+    "formik": "^2.2.9",
     "next": "^10.0.0",
     "nextjs": "0.0.3",
     "react": "17.0.1",
