@@ -31,6 +31,7 @@ class Login extends React.Component{
         signInSuccessUrl: "/login/login-nat",
         
         callbacks:
+        
 
       }
     }) 
