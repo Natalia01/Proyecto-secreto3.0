@@ -17,7 +17,7 @@ export default function Home() {
           Registro de problemas
           <AlertTwoTone twoToneColor="red"></AlertTwoTone>
         </h1>
-      <DatePicker></DatePicker> 
+    
       
         <div className="grid">
           <a href="https://nextjs.org/docs" className="card">
