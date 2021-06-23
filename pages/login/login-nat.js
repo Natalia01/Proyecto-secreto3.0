@@ -3,41 +3,7 @@ import Link from 'next/link'
 import { Form, Input, Button, Checkbox } from 'antd';
 import Layout from '../../components/layout'
 import 'antd/dist/antd.css';
-import Firebase from '../server/firebase';
-
-class Login extends React.Component{
-  //variables de estado 
-  state = {
-    autenticado : false,
-    usuario : "",
-    firebase: null
-  }
-
-  componentDidMount(){
-    const firebase = new Firebase();
-
-    //saber si el usuario está logeado o no
-    //onAuthSatetChanged permite evaluar si el usuario está conectado o no
-    firebase.auth.onAuthStateChanged(authUser => {
-     //si el usuario está conectado cambia el estado a true
-      authUser 
-      ? this.state({
-        autenticado: true,
-        usuario: firebase.auth.currentUser.email,
-        firebase: firebase
-      })
-      //si no está conectado muestra (pinta)
-      :firebase.firebaseui.start("#firebaseui-auth-container"),{
-        signInSuccessUrl: "/login/login-nat",
-        
-        callbacks:
-        
-
-      }
-    }) 
-  }
-}
-
+  
 const layout = {
     labelCol: {
       span: 8,
