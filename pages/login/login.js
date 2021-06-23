@@ -2,9 +2,8 @@
 import 'antd/dist/antd.css';
 import Link from 'next/link'
 import { Form, Input, Button, Checkbox } from 'antd';
-import React from 'react';
-
-
+import React, { useState } from 'react'
+import { createUserItem } from '../api';
 
 const layout = {
   labelCol: {
@@ -22,8 +21,23 @@ const tailLayout = {
 };
 
 
-
 const Demo = () => {
+  const [userDetail, setUserDetail] = useState('');
+  const [username, setUsername] = useState([]);
+  function handleUserDetailChange(e) {
+    console.log(e.target.value);
+    setUserDetail(e.target.value);
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    createUserItem(userDetail).then(res => {
+      console.log('User added to the database');
+    });
+  }
+
+  function resetInputField() {
+    setUserDetail('')
+  }
   const onFinish = (values) => {
     console.log('Success:', values);
   };
@@ -44,8 +58,9 @@ const Demo = () => {
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
-          label="Username"
-          name="username"
+          label={userDetail}
+          name={userDetail}
+          onChange={handleUserDetailChange}
           rules={[
             {
               required: true,
@@ -74,7 +89,7 @@ const Demo = () => {
         </Form.Item>
 
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" onClick={handleSubmit}>
             Submit
           </Button>
         </Form.Item>

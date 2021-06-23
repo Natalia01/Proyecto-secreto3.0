@@ -3,7 +3,6 @@ import { DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import { AlertTwoTone } from '@ant-design/icons';
 import Link from 'next/link'
-
 export default function Home() {
   return (
     <div className="container">
@@ -17,10 +16,9 @@ export default function Home() {
           Registro de problemas
           <AlertTwoTone twoToneColor="red"></AlertTwoTone>
         </h1>
-        <DatePicker></DatePicker>
 
         <div className="grid">
-          <a href="/crud/issueForm" className="card">
+          <a href="/login/login" className="card">
             <h3>Registra tu problema &rarr;</h3>
             <p>En esta sección podrás registrar tu problema a solucionar</p>
           </a>

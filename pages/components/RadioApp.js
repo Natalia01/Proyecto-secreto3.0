@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import styles from '../../styles/Panel.module.css'
 import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
-const RadioApp = ({ onRadio, value }) => {
+const RadioApp = ({ onRadio, value, }) => {
     const radioList = [
         {
             rValue: 1,

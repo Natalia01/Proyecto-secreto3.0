@@ -18,8 +18,8 @@ const nameList = [
     "User 6",
     "User 7"
 ]
-let issueList = []
 function Form() {
+    const [issueList, setIssueList] = useState([])
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -28,50 +28,28 @@ function Form() {
             description: '',
         },
         onSubmit: values => {
-            issueList = [...issueList, formik.values]
+            setIssueList([...issueList, formik.values])
             console.log(formik.values)
             console.log(issueList)
         }
     })
-    const [selectState, setSelectState] = useState('')
-    const [nameState, setNameState] = useState('')
-    const [priorityState, setPriorityState] = useState('')
-    const [descriptionState, setDescriptionState] = useState('')
-    const [currentIssueList, setCurrentIssueList] = useState({ selectState, nameState, priorityState, descriptionState })
-    useEffect(() => {
-        console.log(formik.values)
-    }, [issueList])
-    const handleSetSelected = (selectState) => {
-        setSelectState(selectState)
-        console.log(selectState)
-    }
-    const handleName = (e) => {
-        setNameState(e)
-        console.log(e)
-    }
+
     const handleRadio = (e) => {
-        /* setPriorityState(e) */
         formik.values.priority = e
         formik.handleChange
         console.log(e)
     }
-    const handleSend = () => {
-        setCurrentIssueList({ selectState, nameState, priorityState, descriptionState })
-        console.log(currentIssueList)
-    }
-    const handleSelect = (e) => {
-        formik.values.email = e
-        formik.handleChange
-    }
+
     return (
         <div className={styles.wrapper}>
             <h1 className={styles.h1}>Registro de Problemas</h1>
             <div className={styles.app}>
                 <form className={styles.form} onSubmit={formik.handleSubmit}>
                     <div className={styles.selectDiv}>
-                        Nombre Trabajador (Correo(?)): {' '}
+                        Correo trabajador: {' '}
                         <Select
-                            onChange={handleSelect}
+                            onChange={(value) => formik.setFieldValue("email", value)}
+                            name="email"
                             value={formik.values.email}
                             placeholder="Nombre"
                             className={styles.selector}>
@@ -124,8 +102,8 @@ function Form() {
                 </form>
 
                 <div className={styles.list}>
-                    {issueList.map(({ priority, email, issueName }) =>
-                        <div>Problema: {issueName} de prioridad {priority}, emitido por {email}</div>
+                    {issueList.map(({ priority, email, issueName, description }) =>
+                        <div>Problema: {issueName} de prioridad {priority}, emitido por {email}. Descripción: {description}</div>
                     )}
                 </div>
             </div>
