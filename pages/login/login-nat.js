@@ -21,8 +21,6 @@ const tailLayout = {
   },
 };
 
-
-
 const Demo = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
@@ -34,6 +32,7 @@ const Demo = () => {
 
   return (
     <div>
+      <h1 className="login">Inicio de Sesión</h1>
       <Form
         {...layout}
         name="basic"
@@ -79,10 +78,24 @@ const Demo = () => {
           </Button>
         </Form.Item>
       </Form>
+
+      <style jsx>{`
+    .login{
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    Username{
+      display: block;
+    }
+    `
+
+      }</style>
     </div>
   );
 };
 export default Demo
+
 //ReactDOM.render(<Demo />, mountNode);
 
 

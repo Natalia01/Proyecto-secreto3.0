@@ -1,9 +1,8 @@
-import { Radio } from 'antd';
 import React, { useState } from 'react'
-import styles from '../../styles/Panel.module.css'
+import styles from '../../../styles/Panel.module.css'
 import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
-const RadioApp = ({ onRadio, value, }) => {
+const RadioApp = ({ onRadio }) => {
     const radioList = [
         {
             rValue: 1,
@@ -25,15 +24,15 @@ const RadioApp = ({ onRadio, value, }) => {
     ]
     const [priorState, setPriorState] = useState('0')
     const handleChange = (e) => {
-        onRadio(e)
-        setPriorState(e)
+        onRadio(e) //onRadio se pasa como prop desde la página de formulario
+        setPriorState(e) //cambia el estado interno 
     }
     return (
         <>
             <div value={priorState} className={styles.radioGroup}>
                 {radioList.map(({ rValue, name, type }) => {
                     return (
-                        <label className={styles.radioBtn} onClick={() => handleChange(rValue)}>
+                        <label key={name} className={styles.radioBtn} onClick={() => handleChange(rValue)}>
                             <span className={cx({ radioSpan: true, radioSpanSelected: (priorState === rValue) ? true : false, [`radioSpan${type}`]: true })} />
                             {name}
                         </label>
