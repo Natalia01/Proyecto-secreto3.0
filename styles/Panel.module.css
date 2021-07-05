@@ -7,6 +7,23 @@
   margin-right: 100px;
 }
 
+.list{
+  border: 2px solid rgb(0, 153, 255);
+  border-radius: 5px;
+  margin-left: 8%;
+}
+.listTitles {
+  background-color: lightgray;
+  border: 0.5px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  font-weight: bolder;
+}
+.listRows {
+  background-color: rgb(231, 231, 231);
+  padding: 3px;
+  border: 0.5px solid lightgray;
+}
 .username {
   margin: 0 15px 0 10px;
   font-weight: bolder;
@@ -44,7 +61,6 @@
     grid-template-columns: 1fr 1fr;
     align-items: center;
     padding: 10px;
-    width: 50%;
   }
   .form {
     border: 2px solid rgb(0, 153, 255);
@@ -143,4 +159,22 @@
 }
 .radioSpan.radioSpanSelected::after {
   opacity: 1;
+}
+
+.circleSpan {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.priority-1 {
+  background-color: lime;
+}
+.priority-2 {
+  background-color: yellow;
+}
+.priority-3 {
+  background-color: orange;
+}
+.priority-4 {
+  background-color: red;
 }

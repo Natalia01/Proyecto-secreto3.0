@@ -1,6 +1,6 @@
 import styles from '../../styles/Panel.module.css';
 import 'antd/dist/antd.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import Cookies from 'js-cookie'
 import { createUser, login } from '../api';
@@ -24,6 +24,11 @@ const tailLayout = {
 function loginRegister() {
 
   const router = useRouter() //para redireccionar a páginas
+  useEffect(() => {
+    if (Cookies.get('sessionKey')) {
+      router.push('../crud/issueForm')
+    }
+  })
   const [username, setUsername] = useState(''); //user state en login
   const [password, setPassword] = useState(''); //password state en login
   const [registerUsername, setRegisterUsername] = useState(''); //user state en registro

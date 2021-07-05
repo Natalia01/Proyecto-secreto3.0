@@ -5,8 +5,11 @@ import RadioApp from './RadioApp';
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import Cookies from 'js-cookie';
-import { logout, postIssue, getAllIssues, getIssue } from '/pages/api';
+import { logout, postIssue, getAllIssues } from '/pages/api';
 import { useRouter } from 'next/router';
+import { Row, Col } from 'antd'
+import classNames from 'classnames/bind'
+const cx = classNames.bind(styles)
 
 function Form() {
     const router = useRouter()
@@ -29,9 +32,10 @@ function Form() {
             priority: '',
             description: '',
         },
-        onSubmit: values => {
-            setIssueList([...issueList, formik.values])
-            postIssue(formik.values)
+        onSubmit: async values => {
+            await postIssue(formik.values)
+            issueFunction()
+
         }
     })
     const handleIssues = async () => {
@@ -106,8 +110,22 @@ function Form() {
                 </form>
 
                 <div className={styles.list}>
+                    <Row className={styles.listTitles}>
+                        <Col span={8}>Nombre del Problema</Col>
+                        <Col span={8}>Prioridad del Problema</Col>
+                    </Row>
+                    {console.log(issueList)}
                     {issueList.map(({ data: { email: { issueName, priority } } }) => (
-                        <li key={issueName}>{issueName}' '{priority}</li>
+                        <Row className={styles.listRows}>
+                            <Col span={8}>
+                                {issueName}
+                            </Col>
+                            <Col span={8}>
+                                <div className={`${styles.circleSpan} ${styles[`priority-${priority}`]}`}>
+
+                                </div>
+                            </Col>
+                        </Row>
                     ))}
                 </div>
             </div>
@@ -115,7 +133,3 @@ function Form() {
     )
 }
 export default Form;
-
-function nombre() {
-
-}
