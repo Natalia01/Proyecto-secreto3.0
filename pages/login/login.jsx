@@ -1,10 +1,11 @@
 import styles from '../../styles/Panel.module.css';
 import 'antd/dist/antd.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import Cookies from 'js-cookie'
 import { createUser, login } from '../api';
 import { useRouter } from 'next/router';
+import {sessionCheck} from '/components/loginCookies'
 
 const layout = {
   labelCol: {
@@ -21,14 +22,9 @@ const tailLayout = {
   },
 };
 
-function loginRegister() {
+const LoginRegister = () => {
 
   const router = useRouter() //para redireccionar a páginas
-  useEffect(() => {
-    if (Cookies.get('sessionKey')) {
-      router.push('../crud/issueForm')
-    }
-  })
   const [username, setUsername] = useState(''); //user state en login
   const [password, setPassword] = useState(''); //password state en login
   const [registerUsername, setRegisterUsername] = useState(''); //user state en registro
@@ -211,4 +207,4 @@ function loginRegister() {
     </div >
   )
 }
-export default loginRegister;
+export default sessionCheck(LoginRegister);

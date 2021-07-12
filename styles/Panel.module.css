@@ -1,4 +1,12 @@
-
+.wrapper {
+  height: 100vh;
+  background: linear-gradient(
+    120.04deg,
+    #0062ff -5.36%,
+    #ff6047 87.93%,
+    #f98d51 103.19%
+  );
+}
 .h1 {
   align-items: center;
   margin-left: 15%;
@@ -6,23 +14,23 @@
 .registration {
   margin-right: 100px;
 }
-
-.list{
-  border: 2px solid rgb(0, 153, 255);
-  border-radius: 5px;
-  margin-left: 8%;
+.list {
+  max-width: 600px;
+  margin-left: 10px;
+  border-radius: 10px;
+  background: #f1f6ff;
+  border: 2px solid rgba(0, 98, 255, 0.2);
+  padding: 20px;
 }
 .listTitles {
-  background-color: lightgray;
-  border: 0.5px solid black;
-  border-radius: 5px;
   padding: 5px;
   font-weight: bolder;
 }
 .listRows {
-  background-color: rgb(231, 231, 231);
   padding: 3px;
-  border: 0.5px solid lightgray;
+}
+.listRows > Col {
+  border-right: 1px solid rgb(212, 212, 212);
 }
 .username {
   margin: 0 15px 0 10px;
@@ -36,6 +44,7 @@
 
 .loginForm {
   width: 350px;
+  padding: 10px;
   border: 2px solid rgb(0, 153, 255);
   border-radius: 5px;
   display: grid;
@@ -53,67 +62,36 @@
   font-weight: bold;
   color: white;
   border-radius: 8px;
-  background-color:rgb(0, 153, 255);
+  background-color: rgb(0, 153, 255);
 }
 
 .app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 10px;
-  }
-  .form {
-    border: 2px solid rgb(0, 153, 255);
-    border-radius: 5px;
-    padding: 0px;
-    display: grid;
-    text-align: left;
-  }
-  .selectDiv { 
-    display: inline-flex;   
-    border: 1px solid lightgray;
-    padding: 10px;
-  }
-  .selector {
-    width: 160px;
-    border-radius: 3px;
-  }
-  .radioButtons {
-    display: inline-flex;
-    border: 1px solid lightgray;
-    padding: 10px;
-  }
-  .name {
-    display: inline-flex;
-    border: 1px solid lightgray;
-    padding: 10px;
-  }
-  .nameInput {    
-    margin-left: 10px;
-    width: 160px;
-    border: 1px solid lightgray;
-    border-radius: 3px;
-  }
-  .nameInput:focus {
-    border: 1px solid rgb(0, 153, 255);
-    outline: 0px;
-  }
-  
-  .description {
-    display: flex;
-    align-items: center;
-    border: 1px solid lightgray;
-    padding: 10px;
-  }
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: start;
+  padding: 20px;
+}
+.form {
+  padding: 40px;
+  max-width: 600px;
+  border-radius: 5px;
+  display: grid;
+  text-align: left;
+  background: #f1f6ff;
+  border: 2px solid rgba(0, 98, 255, 0.2);
+  margin-left: 10%;
+}
 
-  /* radio buttons */
+/* radio buttons */
 
 .radioBtn {
   margin-left: 15px;
   display: inline-flex;
-  align-items: center;  
+  align-items: center;
 }
-.radioBtn:hover{
+.radioBtn:hover {
   cursor: pointer;
 }
 .radioSpan {
@@ -128,17 +106,17 @@
 .radioSpan::after {
   opacity: 0;
   transition: all 0.3s ease;
-  content: '';
+  content: "";
   position: absolute;
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background-color: var(--color-radio);
   top: 50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.radioSpan:hover:not(.radioSpanSelected){
+.radioSpan:hover:not(.radioSpanSelected) {
   background-color: var(--color-radio);
   opacity: 0.6;
 }
@@ -146,35 +124,36 @@
   margin-right: 10px;
 }
 .radioSpanlime {
-  --color-radio: lime;
+  --color-radio: #39db7a;
 }
 .radioSpanyellow {
-  --color-radio: yellow;
+  --color-radio: #dbd839;
 }
 .radioSpanorange {
-  --color-radio: orange;
+  --color-radio: #dba239;
 }
 .radioSpanred {
-  --color-radio: red;
+  --color-radio: #db3939;
 }
 .radioSpan.radioSpanSelected::after {
   opacity: 1;
 }
 
 .circleSpan {
-  width: 10px;
-  height: 10px;
+  margin-left: 25%;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
 }
 .priority-1 {
-  background-color: lime;
+  background-color: #39db7a;
 }
 .priority-2 {
-  background-color: yellow;
+  background-color: #dbd839;
 }
 .priority-3 {
-  background-color: orange;
+  background-color: #dba239;
 }
 .priority-4 {
-  background-color: red;
+  background-color: #db3939;
 }

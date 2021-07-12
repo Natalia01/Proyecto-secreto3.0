@@ -1,9 +1,15 @@
-import Form from '../components/issueForm/Form'
+import { useRouter } from 'next/router'
+import FormComponent from '../components/issueForm/FormComponent'
+import { sessionCheck } from '../../components/loginCookies'
 
-export default function issueForm() {
+function issueForm() {
+    const router = useRouter()
+    console.log(router.pathname)
     return (
-        <>
-            <Form />
+        <>        
+            <FormComponent />
         </>
     )
 }
+
+export default sessionCheck(issueForm);
