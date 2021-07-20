@@ -3,7 +3,6 @@ import { Upload, Button, Row, Col } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import React from 'react';
-import handler from '../../api/images';
 
 function PictureUploaderComponent() {
     const toBase64 = file => new Promise((resolve, reject) => {

@@ -9,3 +9,4 @@ export default function handler(req, res) {
   cloudinary.uploader.upload(req.body,(error,result)=>console.log(error,result)
   )
 }
+
