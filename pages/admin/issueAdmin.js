@@ -3,8 +3,13 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import Link from 'next/link'
 import { Alert } from 'antd';
+import { DatePicker} from 'antd';
+import moment from 'moment';
 
 const issuesAdmin = () => {
+  const { RangePicker } = DatePicker;
+
+  const dateFormat = 'YYYY/MM/DD';
   const columns = [
     {
       title: 'N° Orden',
@@ -14,8 +19,8 @@ const issuesAdmin = () => {
     },
     {
       title: 'Fecha',
-      dataIndex: 'age',
-      key: 'age',
+      dataIndex: 'date',
+      key: 'date',
     },
     {
       title: 'Descripción',
@@ -30,7 +35,7 @@ const issuesAdmin = () => {
         <>
           {tags.map(tag => {
             let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
+            if (tag === 'Customer') {
               color = 'volcano';
             }
             return (
@@ -74,7 +79,7 @@ const issuesAdmin = () => {
       name: 'Jim Green',
       age: 42,
       address: 'London No. 1 Lake Park',
-      tags: ['loser'],
+      tags: ['Customer'],
     },
     {
       key: '3',
@@ -92,7 +97,7 @@ const issuesAdmin = () => {
     <body>
     </body>
       <h1 className = "titulo">Administrador de problemas</h1>
-      <Table columns={columns} dataSource={data}/>
+      <Table className = "columns" columns={columns} dataSource={data}/>
 
 
       <style jsx>{`
@@ -110,10 +115,13 @@ const issuesAdmin = () => {
           #ff6047 87.93%,
           #f98d51 103.19%
         );
+        margin: 15px
+        padding;15px
       }
 
       Table{
         display: block;
+        margin: px
       }
       
       `
