@@ -12,7 +12,7 @@ const issuesAdmin = () => {
   const dateFormat = 'YYYY/MM/DD';
   const columns = [
     {
-      title: 'N° Orden',
+      title: 'N° Operación',
       dataIndex: 'name',
       key: 'name',
       render: text => <a>{text}</a>,
@@ -50,6 +50,7 @@ const issuesAdmin = () => {
     {
       title: 'Severidad',
       key: 'severidad',
+     
     },
     {
       title: 'Acciones',
@@ -87,7 +88,7 @@ const issuesAdmin = () => {
       age: 32,
       address: 'Sidney No. 1 Lake Park',
       tags: ['cool', 'teacher'],
-    },
+    }
   ];
 
   return(
@@ -97,7 +98,7 @@ const issuesAdmin = () => {
     <body>
     </body>
       <h1 className = "titulo">Administrador de problemas</h1>
-      <Table className = "columns" columns={columns} dataSource={data}/>
+      <Table columns={columns} dataSource={data}/>
 
 
       <style jsx>{`
@@ -121,17 +122,13 @@ const issuesAdmin = () => {
 
       Table{
         display: block;
-        margin: px
+        margin-left: 50px
       }
       
       `
       } </style>
     </div> 
-
-
-  
   )
-
 }
 
 

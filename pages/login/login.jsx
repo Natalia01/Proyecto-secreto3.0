@@ -130,6 +130,7 @@ const LoginRegister = () => {
     .login{
       text-align: center;
       margin-top: 50px;
+      color: white
     }
 
     Username{
@@ -140,7 +141,7 @@ const LoginRegister = () => {
           }</style>
         </div>
         <div className={styles.registration}>
-          <h1 className="login">Registro de usuario</h1>
+          <h1 className="registrop">Registro de usuario</h1>
           <Form
             id='register'
             {...layout}
@@ -194,6 +195,12 @@ const LoginRegister = () => {
 
     .login{
       text-align: center;
+      color: white;
+    }
+
+    .registrop{
+      text-align: center;
+      color: white
     }
 
     Username{
