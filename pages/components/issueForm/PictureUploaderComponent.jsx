@@ -3,29 +3,33 @@ import { Upload, Button, Row, Col } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import React from 'react';
+import handler from '../../api/images';
 
 function PictureUploaderComponent() {
-    function getBase64(file){      
-        return new Promise((resolve,reject)=>{
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onLoad=() => resolve(reader.result);
-            reader.onerror = error=> reject(error);
-            reader.readAsBinaryString(file.originFileObj);
-            console.log(reader.readAsBinaryString(file.originFileObj));
-        });
-    }
+    const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+const upload = async (file) => {
+    console.log(file)
+    fetch('../api/images', {
+        method: 'POST',
+        body: await toBase64(file)
+    }).then(response=>JSON.stringify(response))}
+    
+
     return (
-        <Row className={styles.picUploader} style={{ fontWeight: "bold", marginTop: 8 }}>
+        <Row
+        className={styles.picUploader}
+        style={{ fontWeight: "bold", marginTop: 8 }}>
             <Col span={6} />
             <Col span={16}>
-                <Upload onChange={(file)=>getBase64(file.originFileObj)} >
+                <Upload onChange={(e)=>upload(e.file.originFileObj)} >
                     <Button icon={<UploadOutlined />}>
                         Adjuntar Capturas
                     </Button>
-                    <img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
-    AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
-        9TXL0Y4OHwAAAABJRU5ErkJggg=="/>
                 </Upload>
             </Col>
         </Row>

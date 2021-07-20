@@ -7,7 +7,12 @@ function SubmitButtonComponent({handleSubmit}){
         <Row>
             <Col span={6} />
             <Col span={16}>
-                <Button onClick={handleSubmit} type="primary" htmlType="submit">Enviar</Button>
+                <Button
+                onClick={handleSubmit}
+                type="primary"
+                htmlType="submit">
+                    Enviar
+                </Button>
             </Col>
         </Row>
     )

@@ -1,5 +1,4 @@
 import { client, q, Documents } from '../config/db';
-
 export const createUser = async (email, password) => {
     await client
         .query(
@@ -25,7 +24,6 @@ export const login = async (email, password) => {
         .catch(error => alert('Credenciales incorrectas'))
     return result
 }
-
 export const logout = () => {
     client
         .query(
@@ -34,27 +32,27 @@ export const logout = () => {
         .then((ret) => console.log(ret))
         .catch((err) => console.error('Error: %s', err))
 }
-
-export const postIssue = async (email, issueName, priority, description) => {
+export const postIssue = async (email, operationNumber, priority, description) => {
     await client
         .query(
             q.Create(q.Collection('issues'), {
                 data: {
                     email,
-                    issueName,
+                    operationNumber,
                     priority,
                     description
                 }
             })
         )
 }
-export const getAllIssues = async (email) => {
+export const getAllIssuesByUser = async (email) => { // este es para cada usuario
     const result = await client
         .query(
             q.Map(
                 q.Paginate(
-                    q.Documents(
-                        q.Collection('issues')
+                    q.Match(
+                        q.Index('indexByMail'),
+                        email
                     )
                 ),
                 q.Lambda(email => q.Get(email))
@@ -64,17 +62,19 @@ export const getAllIssues = async (email) => {
         .catch(error => console.log('Error: ', error.message))
     return result
 }
-
-export const getIssue = async (email) => {
+export const getAllIssues = async (email) => { //este es el que debería usar la Nati pa tener todos los problemas
     const result = await client
         .query(
-            q.Get(
-                q.Match(
-                    q.Index('indexByMail'),
-                    email
-                )
+            q.Map(
+                q.Paginate(
+                    q.Documents(
+                        q.Collection('issues')
+                    )
+                ),
+                q.Lambda(() => q.Get(email))
             )
         )
-        .then(ret => console.log(ret))
+        .then(ret => ret.data)
         .catch(error => console.log('Error: ', error.message))
+    return result
 }

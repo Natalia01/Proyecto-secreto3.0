@@ -21,9 +21,7 @@ const tailLayout = {
     span: 16,
   },
 };
-
 const LoginRegister = () => {
-
   const router = useRouter() //para redireccionar a páginas
   const [username, setUsername] = useState(''); //user state en login
   const [password, setPassword] = useState(''); //password state en login
@@ -32,19 +30,15 @@ const LoginRegister = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
   };
-
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-
   function handleUsernameChange(e) {  //actualiza el user state
     setUsername(e.target.value);
   }
-
   function handlePasswordChange(e) {//actualiza el password state
     setPassword(e.target.value);
   }
-
   async function handleSubmitRegister(e) {
     e.preventDefault();
     resetInputField();
@@ -62,146 +56,89 @@ const LoginRegister = () => {
       router.push('../crud/issueForm')
     }
   }
-
-  function resetInputField() {
-    setRegisterUsername('')
-    setRegisterPassword('')
-  }
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.loginApp}>
-        <div>
-          <h1 className="login">Inicio de Sesión</h1>
+        <div className={styles.form}>
+          <h1 className={styles.h1}>Inicio de Sesión</h1>
           <Form
             id='login'
             {...layout}
             name="basic"
             initialValues={{
-              remember: true,
-            }}
+            remember: true,}}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-          >
+            onFinishFailed={onFinishFailed}>
             <Form.Item
               label="Username"
               value={username}
-              rules={[
-                {
+              rules={[{
                   required: true,
-                  message: 'Please input your username!',
-                },
-              ]}
-            >
+                  message: 'Please input your username!',},]}>
               <div className={styles.loginTextInput}>
                 <Input
                   onChange={handleUsernameChange} />@klog.co
               </div>
             </Form.Item>
-
             <Form.Item
               label="Password"
               value={password}
-              rules={[
-                {
+              rules={[{
                   required: true,
-                  message: 'Please input your password!',
-                },
-              ]}
-            >
+                  message: 'Please input your password!',},]}>
               <div className={styles.loginTextInput}>
-                <Input.Password
-                  onChange={handlePasswordChange} />
+                <Input.Password onChange={handlePasswordChange} />
               </div>
             </Form.Item>
-
             <Form.Item {...tailLayout} name="remember" valuePropName="checked">
               <Checkbox>Recuérdame</Checkbox>
             </Form.Item>
-
             <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit" onClick={handleSubmitLogin}>
                 Iniciar sesión
               </Button>
             </Form.Item>
-          </Form>
-
-          <style jsx>{`
-    .login{
-      text-align: center;
-      margin-top: 50px;
-    }
-
-    Username{
-      display: block;
-    }
-    `
-
-          }</style>
+          </Form>          
         </div>
         <div className={styles.registration}>
-          <h1 className="login">Registro de usuario</h1>
+        <div className={styles.form}>
+          <h1 className={styles.h1}>Registro de usuario</h1>
           <Form
             id='register'
             {...layout}
             name="basic"
             initialValues={{
-              remember: true,
-            }}
+            remember: true,}}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-          >
+            onFinishFailed={onFinishFailed}>
             <Form.Item
               label="Username"
               value={registerUsername}
-              rules={[
-                {
+              rules={[{
                   required: true,
-                  message: 'Please input your username!',
-                },
-              ]}
-            >
+                  message: 'Please input your username!',},]}>
               <div className={styles.loginTextInput}>
-                <Input
-                  onChange={handleUsernameChange} />@klog.co
+                <Input onChange={handleUsernameChange}/>@klog.co
               </div>
             </Form.Item>
-
             <Form.Item
               label="Password"
               value={registerPassword}
-              rules={[
-                {
+              rules={[{
                   required: true,
-                  message: 'Please input your password!',
-                },
-              ]}
-            >
+                  message: 'Please input your password!',},]}>
               <div className={styles.loginTextInput}>
                 <Input.Password
                   onChange={handlePasswordChange} />
               </div>
             </Form.Item>
-
             <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit" onClick={handleSubmitRegister}>
                 Registrarse
               </Button>
             </Form.Item>
-          </Form>
-
-          <style jsx>{`
-
-    .login{
-      text-align: center;
-    }
-
-    Username{
-      display: block;
-    }
-    `
-
-          }</style>
+          </Form>          
+          </div>
         </div>
       </div>
     </div >
