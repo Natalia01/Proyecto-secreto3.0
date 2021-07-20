@@ -43,6 +43,10 @@ const issuesAdmin = () => {
       ),
     },
     {
+      title: 'Severidad',
+      key: 'severidad',
+    },
+    {
       title: 'Acciones',
       key: 'action',
       render: (text, record) => (
@@ -83,13 +87,46 @@ const issuesAdmin = () => {
 
   return(
     <div>
-      <h1>Administrador de problemas</h1>
+      <head>
+  </head>
+    <body>
+    </body>
+      <h1 className = "titulo">Administrador de problemas</h1>
       <Table columns={columns} dataSource={data}/>
+
+
+      <style jsx>{`
+
+      .titulo{
+        text-align: center;
+        margin-top: 30px;
+        margin-bot: 30px;
+        color: white;
+      }
+      body{
+        background: linear-gradient(
+          120.04deg,
+          #0062ff -5.36%,
+          #ff6047 87.93%,
+          #f98d51 103.19%
+        );
+      }
+
+      Table{
+        display: block;
+      }
+      
+      `
+      } </style>
     </div> 
+
+
   
   )
 
 }
+
+
 
 
 export default issuesAdmin
