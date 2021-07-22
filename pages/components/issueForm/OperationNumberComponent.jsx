@@ -12,9 +12,9 @@ function OperationNumberComponent({ handleChange, operationValue }) {
             </Col>
             <Col span={16}>
                 <Form.Item
-                    name="issueName"
+                    name="operationNumber"
                     className={styles.nameInput}
-                    id="issueName"
+                    id="operationNumber"
                     required={true}
                     onChange={handleChange}
                     value={operationValue} >

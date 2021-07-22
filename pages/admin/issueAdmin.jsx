@@ -6,6 +6,7 @@ import { Alert } from 'antd';
 import { DatePicker} from 'antd';
 import moment from 'moment';
 
+
 const issuesAdmin = () => {
   const { RangePicker } = DatePicker;
 
@@ -57,7 +58,7 @@ const issuesAdmin = () => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Link href = '/admin/details'>
+          <Link href = '/admin/cardsDetails'>
           <a>Ver detalles</a>
           </Link>
           
@@ -99,10 +100,9 @@ const issuesAdmin = () => {
     </body>
       <h1 className = "titulo">Administrador de problemas</h1>
       <Table columns={columns} dataSource={data}/>
-
+      <button className="revisado">Problemas revisados</button>
 
       <style jsx>{`
-
       .titulo{
         text-align: center;
         margin-top: 30px;
@@ -122,16 +122,15 @@ const issuesAdmin = () => {
 
       Table{
         display: block;
-        margin-left: 50px
+        
       }
-      
-      `
+      {.revisado{
+        
+      }
+    }`
       } </style>
     </div> 
   )
 }
-
-
-
 
 export default issuesAdmin

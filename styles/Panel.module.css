@@ -6,14 +6,10 @@
     #ff6047 87.93%,
     #f98d51 103.19%
   );
+  align-items: center;
 }
 .h1 {
   align-items: center;
-  margin-left: 15%;
-}
-.registration {
-  margin-right: 100px;
-  color: white;
 }
 .list {
   max-width: 600px;
@@ -59,7 +55,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  color: white;
+  justify-content: center;
 }
 .buttonApp {
   font-weight: bold;

@@ -3,7 +3,7 @@ import { Input, Row, Col,Form } from 'antd'
 import 'antd/dist/antd.css';
 import React from 'react';
 
-function DescriptionComponent({ handleChange, descriptionValue }) {
+function DescriptionComponent({ handleChange, descriptionValue,onSubmit }) {
     const { TextArea } = Input
     return (
         <Row className={styles.description} style={{ fontWeight: "bold", marginTop: 8 }}>

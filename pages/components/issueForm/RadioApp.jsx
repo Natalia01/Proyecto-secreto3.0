@@ -24,7 +24,7 @@ const RadioApp = ({ onRadio }) => {
             type: "red"
         }
     ]
-    const [priorState, setPriorState] = useState('0')
+    const [priorState, setPriorState] = useState('')
     const handleChange = (e) => {
         onRadio(e) //onRadio se pasa como prop desde la página de formulario
         setPriorState(e) //cambia el estado interno del componente
@@ -35,7 +35,10 @@ const RadioApp = ({ onRadio }) => {
                 Prioridad: {' '}
             </Col>
             <Col span={16}>
-                <div value={priorState} className={styles.radioGroup} style={{ fontWeight: "normal" }}>
+                <div
+                    value={priorState}
+                    className={styles.radioGroup}
+                    style={{ fontWeight: "normal" }}>
                     {radioList.map(({ rValue, name, type }) => {
                         return (
                             <label
