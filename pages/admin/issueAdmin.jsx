@@ -6,13 +6,14 @@ import { Alert } from 'antd';
 import { DatePicker} from 'antd';
 import moment from 'moment';
 
+
 const issuesAdmin = () => {
   const { RangePicker } = DatePicker;
 
   const dateFormat = 'YYYY/MM/DD';
   const columns = [
     {
-      title: 'N° Orden',
+      title: 'N° Operación',
       dataIndex: 'name',
       key: 'name',
       render: text => <a>{text}</a>,
@@ -50,13 +51,14 @@ const issuesAdmin = () => {
     {
       title: 'Severidad',
       key: 'severidad',
+     
     },
     {
       title: 'Acciones',
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Link href = '/admin/details'>
+          <Link href = '/admin/cardsDetails'>
           <a>Ver detalles</a>
           </Link>
           
@@ -87,7 +89,7 @@ const issuesAdmin = () => {
       age: 32,
       address: 'Sidney No. 1 Lake Park',
       tags: ['cool', 'teacher'],
-    },
+    }
   ];
 
   return(
@@ -97,11 +99,10 @@ const issuesAdmin = () => {
     <body>
     </body>
       <h1 className = "titulo">Administrador de problemas</h1>
-      <Table className = "columns" columns={columns} dataSource={data}/>
-
+      <Table columns={columns} dataSource={data}/>
+      <button className="revisado">Problemas revisados</button>
 
       <style jsx>{`
-
       .titulo{
         text-align: center;
         margin-top: 30px;
@@ -121,20 +122,15 @@ const issuesAdmin = () => {
 
       Table{
         display: block;
-        margin: px
+        
       }
-      
-      `
+      {.revisado{
+        
+      }
+    }`
       } </style>
     </div> 
-
-
-  
   )
-
 }
-
-
-
 
 export default issuesAdmin

@@ -46,6 +46,7 @@
   border-radius: 5px;
   display: grid;
   text-align: left;
+  color: white;
 }
 .loginButton {
   background-color: rgb(0, 153, 255);
