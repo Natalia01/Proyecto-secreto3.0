@@ -9,8 +9,9 @@ function IssueListComponent({data}) {
             <Row className={styles.listTitles}>
                 <Col span={4}>Prioridad</Col>
                 <Col span={8}>Número de operación</Col>
+                <Col span={8}>Fecha</Col>
             </Row>
-            {data.map(({ref, data: { email: { operationNumber, priority } } }) => (
+            {/* {data.map(({ref, data: { email: { operationNumber, priority,date } } }) => (
                 <Row key={ref} className={styles.listRows}>
                     <Col span={4}>
                         <div className={`${styles.circleSpan} ${styles[`priority-${priority}`]}`}/>
@@ -18,8 +19,11 @@ function IssueListComponent({data}) {
                     <Col span={8}>
                         {operationNumber}
                     </Col>
+                    <Col span={8}>
+                        {date}
+                    </Col>
                 </Row>
-            ))}
+            ))} */}
         </div>
     )
 }

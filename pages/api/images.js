@@ -1,5 +1,4 @@
 const cloudinary = require('cloudinary').v2
-
   cloudinary.config({
   cloud_name: 'klog-co',
   api_key: '158516657437216',

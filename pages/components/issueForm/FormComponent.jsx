@@ -4,7 +4,6 @@ import RadioApp from './RadioApp';
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import Cookies from 'js-cookie';
-import { logout, postIssue } from '/pages/api';
 import { useRouter } from 'next/router';
 import { Form } from 'antd'
 import UserComponent from './UserComponent';
@@ -12,8 +11,11 @@ import OperationNumberComponent from './OperationNumberComponent';
 import DescriptionComponent from './DescriptionComponent';
 import PictureUploaderComponent from './PictureUploaderComponent';
 import SubmitButtonComponent from './SubmitButtonComponent';
+import axios from 'axios'
+import { useState } from 'react';
 
-function FormComponent({onFormSubmit}) {
+function FormComponent({onFormSubmit,data}) {
+    const [issueList,setIssueList] = useState(data)
     const router = useRouter()
     const activeUser = Cookies.get('username')
     const sessionCookie = Cookies.get('sessionKey')
@@ -23,15 +25,20 @@ function FormComponent({onFormSubmit}) {
     const formik = useFormik({
         initialValues: {
             email: '',
+            date: '',
             operationNumber: '',
             priority: '',
             description: '',
             image: '',
         },
         onSubmit: async (values) => {
-            await postIssue(values)
+            await axios.post('../api/faunaQueries/postIssue',{
+                method: 'POST',
+                body: values
+            }).then((res)=>setIssueList([...data,res]))
+            .then(()=>console.log(issueList))
+            .catch(()=>console.log(JSON.stringify(values)))
             onFormSubmit()
-            console.log(formik.values.image)
         }
     })
     const handleRadio = (e) => {
@@ -42,13 +49,14 @@ function FormComponent({onFormSubmit}) {
         Cookies.remove('sessionKey');
         Cookies.remove('username');
         Cookies.remove('password');
-        logout
+        fetch('../api/faunaQueries/userLogout')
         if (!Cookies.get('sessionKey')) {
             router.push('/login/login')
         }
     }
     const handleSubmit = () => {
-        /* formik.handleSubmit */
+
+        formik.handleSubmit
     }
     return (
 <div className={styles.form}>
