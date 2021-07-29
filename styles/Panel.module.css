@@ -1,3 +1,11 @@
+.app {
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: start;
+  padding: 20px;
+}
 .wrapper {
   height: 100vh;
   background: linear-gradient(
@@ -11,6 +19,9 @@
 .h1 {
   align-items: center;
 }
+.icons:hover {
+  cursor: pointer
+}
 .list {
   max-width: 600px;
   margin-left: 10px;
@@ -20,10 +31,12 @@
   padding: 20px;
 }
 .listTitles {
+  justify-content: center;
   padding: 5px;
   font-weight: bolder;
 }
 .listRows {
+  justify-content: center;
   padding: 3px;
 }
 .listRows > Col {
@@ -64,14 +77,6 @@
   background-color: rgb(0, 153, 255);
 }
 
-.app {
-  border-radius: 5px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  justify-content: start;
-  padding: 20px;
-}
 .form {
   padding: 40px;
   max-width: 600px;

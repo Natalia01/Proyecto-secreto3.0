@@ -13,10 +13,10 @@ export default async function getIssuesByUser(req, res) { // este es para cada u
                 ),
                 q.Lambda(email => q.Get(email))
             )
-        ).then(response=>response)
-        .then((response)=>res.json(response))
+        ).then(response => response)
+        .then(response => res.json(response))
         .catch(error => console.log('Error: ', error.message))
-    return(
+    return (
         res
     )
 }

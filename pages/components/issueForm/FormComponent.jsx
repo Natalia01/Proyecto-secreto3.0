@@ -12,10 +12,8 @@ import DescriptionComponent from './DescriptionComponent';
 import PictureUploaderComponent from './PictureUploaderComponent';
 import SubmitButtonComponent from './SubmitButtonComponent';
 import axios from 'axios'
-import { useState } from 'react';
 
-function FormComponent({onFormSubmit,data}) {
-    const [issueList,setIssueList] = useState(data)
+function FormComponent({ onFormSubmit }) {
     const router = useRouter()
     const activeUser = Cookies.get('username')
     const sessionCookie = Cookies.get('sessionKey')
@@ -32,12 +30,11 @@ function FormComponent({onFormSubmit,data}) {
             image: '',
         },
         onSubmit: async (values) => {
-            await axios.post('../api/faunaQueries/postIssue',{
+            await axios.post('../api/faunaQueries/postIssue', {
                 method: 'POST',
                 body: values
-            }).then((res)=>setIssueList([...data,res]))
-            .then(()=>console.log(issueList))
-            .catch(()=>console.log(JSON.stringify(values)))
+            }).then((res) => setIssueList([...data, res]))
+                .catch(() => console.log(JSON.stringify(values)))
             onFormSubmit()
         }
     })
@@ -54,35 +51,30 @@ function FormComponent({onFormSubmit,data}) {
             router.push('/login/login')
         }
     }
-    const handleSubmit = () => {
-
-        formik.handleSubmit
-    }
     return (
-<div className={styles.form}>
-    <h1 className={styles.h1}>Registro de Problemas</h1>
-    <Form onFinish={formik.handleSubmit}>
-        <UserComponent handleLogout={handleLogout} />
-        <OperationNumberComponent
-            handleChange={formik.handleChange}
-            operationValue={formik.values.operationNumber} />
-        <RadioApp
-            id="priority"
-            key="radio"
-            onChange={handleRadio}
-            value={formik.values.priority}
-            required={true}
-            onRadio={handleRadio}/>
-        <DescriptionComponent
-            handleChange={formik.handleChange}
-            value={formik.values.description}/>
-        <PictureUploaderComponent
-            value={formik.values.image}/>
-        <SubmitButtonComponent 
-            type="submit"
-            onSubmit={handleSubmit}/>
-    </Form>
-</div>               
+        <div className={styles.form}>
+            <h1 className={styles.h1}>Registro de Problemas</h1>
+            <Form onFinish={formik.handleSubmit}>
+                <UserComponent handleLogout={handleLogout} />
+                <OperationNumberComponent
+                    handleChange={formik.handleChange}
+                    operationValue={formik.values.operationNumber} />
+                <RadioApp
+                    id="priority"
+                    key="radio"
+                    value={formik.values.priority}
+                    required={true}
+                    onRadio={handleRadio} />
+                <DescriptionComponent
+                    handleChange={formik.handleChange}
+                    value={formik.values.description} />
+                <PictureUploaderComponent
+                    value={formik.values.image} />
+                <SubmitButtonComponent
+                    type="submit"
+                    onSubmit={formik.handleSubmit} />
+            </Form>
+        </div>
     )
 }
 export default FormComponent;
