@@ -1,7 +1,7 @@
 import styles from '../../../styles/Panel.module.css';
 import 'antd/dist/antd.css';
 import RadioApp from './RadioApp';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
@@ -17,6 +17,8 @@ function FormComponent({ onFormSubmit }) {
     const router = useRouter()
     const activeUser = Cookies.get('username')
     const sessionCookie = Cookies.get('sessionKey')
+    const [imageState, setImageState] = useState([])
+    const [imageTo64, setImageTo64] = useState([])
     useEffect(() => {
         formik.values.email = activeUser
     }, [sessionCookie])
@@ -27,14 +29,16 @@ function FormComponent({ onFormSubmit }) {
             operationNumber: '',
             priority: '',
             description: '',
-            image: '',
+            images: '',
+            state: 'Enviado',
+
         },
         onSubmit: async (values) => {
             await axios.post('../api/faunaQueries/postIssue', {
                 method: 'POST',
                 body: values
-            }).then((res) => setIssueList([...data, res]))
-                .catch(() => console.log(JSON.stringify(values)))
+            }).then(res => setIssueList([...data, res]))
+                .catch(() => JSON.stringify(values))
             onFormSubmit()
         }
     })
@@ -51,10 +55,50 @@ function FormComponent({ onFormSubmit }) {
             router.push('/login/login')
         }
     }
+    const handlePictureLoad = async file => {
+        console.log(file.file.originFileObj)
+        await toBase64(file.file.originFileObj)
+            .then(res => setImageTo64([...imageTo64, res]))
+    }
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+    const uploadImage = async () => {
+        console.log('imageTo64', imageTo64)
+        imageTo64.map(async file => {
+            console.log(file)
+            const response = await fetch('../api/uploadImages', {
+                method: 'POST',
+                body: file
+            }).then(async response => {
+                console.log('object')
+                const imageResObj = await response.json()
+                const imageId = await imageResObj.public_id
+                const imageUrl = await imageResObj.url
+                setImageState([...imageState,
+                { imageUrl: imageUrl, imageId: imageId }])
+                formik.values.images = imageState
+                formik.handleChange
+            })
+        })
+    }
+    const handleSubmit = async () => {
+        uploadImage()
+            .then(() => formik.handleSubmit())
+            .then(() => {
+                setImageState([])
+                formik.values.images = imageState
+                formik.handleChange
+            })
+            .then(() => console.log(formik.values.images))
+    }
     return (
         <div className={styles.form}>
             <h1 className={styles.h1}>Registro de Problemas</h1>
-            <Form onFinish={formik.handleSubmit}>
+            <Form onFinish={handleSubmit}>
                 <UserComponent handleLogout={handleLogout} />
                 <OperationNumberComponent
                     handleChange={formik.handleChange}
@@ -69,10 +113,11 @@ function FormComponent({ onFormSubmit }) {
                     handleChange={formik.handleChange}
                     value={formik.values.description} />
                 <PictureUploaderComponent
-                    value={formik.values.image} />
+                    onChange={handlePictureLoad}
+                    value={formik.values.images} />
                 <SubmitButtonComponent
                     type="submit"
-                    onSubmit={formik.handleSubmit} />
+                    onSubmit={handleSubmit} />
             </Form>
         </div>
     )

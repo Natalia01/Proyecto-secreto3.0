@@ -11,25 +11,31 @@ function IssueListComponent({ issueList, setIssuesFunction }) {
                 <Col span={4}>Prioridad</Col>
                 <Col span={6}>N° de operación</Col>
                 <Col span={6}>Fecha</Col>
-                <Col span={6}>Acciones</Col>
+                <Col span={4}>Acciones</Col>
+                <Col span={4}>Estado</Col>
             </Row>
-            {issueList.map(({ ref: { "@ref": { id } }, data: { operationNumber, priority, date } }) => (
+            {issueList.map(({ ref: { "@ref": { id } }, data: { operationNumber, priority, date, images, state } }) => (
                 <Row key={id} className={styles.listRows}>
                     <Col span={4}>
-                        <div className={`${styles.circleSpan} ${styles[`priority-${priority}`]}`} />
+                        <div className={`${styles.circleSpan}
+                        ${styles[`priority-${priority}`]}`} />
                     </Col>
                     <Col span={6}>
                         {operationNumber}
                     </Col>
                     <Col span={6}>
-                        {new Date(date).toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                        {new Date(date).toLocaleString([],
+                            { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                     </Col>
-                    <Col span={6}>
+                    <Col span={4}>
                         <svg className={styles.icons} onClick={async () => {
                             await axios.post('../api/faunaQueries/deleteIssue', {
                                 method: 'POST',
                                 body: id
-                            }).then(() => setIssuesFunction())
+                            }).then(async () => await axios.post('../api/destroyImages', {
+                                method: 'POST',
+                                body: images
+                            })).then(() => setIssuesFunction())
                         }}
                             width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd" d="M10.3158 2.21053V1.47368C10.3158 1.08284 10.1605 0.708001 9.88416 0.431632C9.60779 0.155263 9.23295 0 8.8421 0H4.42105C4.03021 0 3.65537 0.155263 3.379 0.431632C3.10263 0.708001 2.94737 1.08284 2.94737 1.47368V2.21053H0.736842C0.541419 2.21053 0.354001 2.28816 0.215816 2.42634C0.0776313 2.56453 0 2.75195 0 2.94737C0 3.14279 0.0776313 3.33021 0.215816 3.46839C0.354001 3.60658 0.541419 3.68421 0.736842 3.68421H1.47368V11.7895C1.47368 12.3757 1.70658 12.938 2.12113 13.3526C2.53569 13.7671 3.09794 14 3.68421 14H9.57895C10.1652 14 10.7275 13.7671 11.142 13.3526C11.5566 12.938 11.7895 12.3757 11.7895 11.7895V3.68421H12.5263C12.7217 3.68421 12.9092 3.60658 13.0473 3.46839C13.1855 3.33021 13.2632 3.14279 13.2632 2.94737C13.2632 2.75195 13.1855 2.56453 13.0473 2.42634C12.9092 2.28816 12.7217 2.21053 12.5263 2.21053H10.3158ZM8.8421 1.47368H4.42105V2.21053H8.8421V1.47368ZM10.3158 3.68421H2.94737V11.7895C2.94737 11.9849 3.025 12.1723 3.16318 12.3105C3.30137 12.4487 3.48879 12.5263 3.68421 12.5263H9.57895C9.77437 12.5263 9.96179 12.4487 10.1 12.3105C10.2382 12.1723 10.3158 11.9849 10.3158 11.7895V3.68421Z" fill="#121857" />
@@ -41,6 +47,10 @@ function IssueListComponent({ issueList, setIssuesFunction }) {
                         </svg>
 
                     </Col>
+                    <Col span={4}>
+                        {state}
+                    </Col>
+
                 </Row>
             ))}
         </div>

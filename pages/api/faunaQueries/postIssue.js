@@ -1,8 +1,8 @@
 import { client, q } from '../../config/db';
 
-export default async function postIssue(req,res){
+export default async function postIssue(req, res) {
     const request = req.body
-    const {body:{email, operationNumber,priority,description,image}} = request
+    const { body: { email, operationNumber, priority, description, images, state } } = request
     const date = new Date().toString()
     await client
         .query(
@@ -14,9 +14,10 @@ export default async function postIssue(req,res){
                     operationNumber,
                     priority,
                     description,
-                    image,
+                    images,
+                    state,
                 }
             })
-        ).then(()=>res.json())
-        .catch(err=>err)
+        ).then(() => res.json())
+        .catch(err => err)
 }
