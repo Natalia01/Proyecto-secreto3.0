@@ -5,9 +5,9 @@ cloudinary.config({
   api_secret: '7OhrSLDoNqVYYFI12a-NLdIMLME'
 })
 export default async (req, res) => {
-
-  console.log(req.body.body)/* 
-  const imageResult = await cloudinary.uploader.destroy(req.body, () => { })
-  res.status(200).json(imageResult) */
+  const body = req.body.body
+  console.log(body)
+  const deleteImages = () => body.map(async ({ imageId }) => await cloudinary.uploader.destroy(imageId, () => { }))
+  deleteImages(req)
   return res.json()
 }

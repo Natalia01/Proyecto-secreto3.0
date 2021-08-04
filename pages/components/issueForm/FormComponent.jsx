@@ -2,7 +2,7 @@ import styles from '../../../styles/Panel.module.css';
 import 'antd/dist/antd.css';
 import RadioApp from './RadioApp';
 import React, { useEffect, useState } from 'react';
-import { useFormik } from 'formik';
+import { useFormikContext } from 'formik';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { Form } from 'antd'
@@ -13,16 +13,16 @@ import PictureUploaderComponent from './PictureUploaderComponent';
 import SubmitButtonComponent from './SubmitButtonComponent';
 import axios from 'axios'
 
-function FormComponent({ onFormSubmit }) {
+const FormComponent = ({ setImageValue }) => {
+    const { values, handleChange, handleSubmit, setFieldValue, resetForm } = useFormikContext()
     const router = useRouter()
     const activeUser = Cookies.get('username')
     const sessionCookie = Cookies.get('sessionKey')
-    const [imageState, setImageState] = useState([])
     const [imageTo64, setImageTo64] = useState([])
     useEffect(() => {
-        formik.values.email = activeUser
+        values.email = activeUser
     }, [sessionCookie])
-    const formik = useFormik({
+    /* const formik = useFormik({
         initialValues: {
             email: '',
             date: '',
@@ -41,10 +41,10 @@ function FormComponent({ onFormSubmit }) {
                 .catch(() => JSON.stringify(values))
             onFormSubmit()
         }
-    })
+    }) */
     const handleRadio = (e) => {
-        formik.values.priority = e
-        formik.handleChange
+        values.priority = e
+        handleChange
     }
     const handleLogout = () => {
         Cookies.remove('sessionKey');
@@ -56,7 +56,6 @@ function FormComponent({ onFormSubmit }) {
         }
     }
     const handlePictureLoad = async file => {
-        console.log(file.file.originFileObj)
         await toBase64(file.file.originFileObj)
             .then(res => setImageTo64([...imageTo64, res]))
     }
@@ -67,57 +66,49 @@ function FormComponent({ onFormSubmit }) {
         reader.onerror = error => reject(error);
     });
     const uploadImage = async () => {
-        console.log('imageTo64', imageTo64)
-        imageTo64.map(async file => {
-            console.log(file)
+        let images = []
+        for (const file of imageTo64) {
             const response = await fetch('../api/uploadImages', {
                 method: 'POST',
                 body: file
-            }).then(async response => {
-                console.log('object')
-                const imageResObj = await response.json()
-                const imageId = await imageResObj.public_id
-                const imageUrl = await imageResObj.url
-                setImageState([...imageState,
-                { imageUrl: imageUrl, imageId: imageId }])
-                formik.values.images = imageState
-                formik.handleChange
             })
-        })
+            const imageResObj = await response.json()
+            const imageId = imageResObj.public_id
+            const imageUrl = imageResObj.url
+            images = [...images, { imageUrl: imageUrl, imageId: imageId }]
+        }
+        return images
+
     }
-    const handleSubmit = async () => {
-        uploadImage()
-            .then(() => formik.handleSubmit())
-            .then(() => {
-                setImageState([])
-                formik.values.images = imageState
-                formik.handleChange
-            })
-            .then(() => console.log(formik.values.images))
+    const handleFormSubmit = async () => {
+        const images = await uploadImage();
+        setImageValue(images)
+        await handleSubmit();
     }
     return (
         <div className={styles.form}>
             <h1 className={styles.h1}>Registro de Problemas</h1>
-            <Form onFinish={handleSubmit}>
+            <Form >
                 <UserComponent handleLogout={handleLogout} />
                 <OperationNumberComponent
-                    handleChange={formik.handleChange}
-                    operationValue={formik.values.operationNumber} />
+                    handleChange={handleChange}
+                    operationValue={values.operationNumber} />
                 <RadioApp
                     id="priority"
                     key="radio"
-                    value={formik.values.priority}
+                    value={values.priority}
                     required={true}
                     onRadio={handleRadio} />
                 <DescriptionComponent
-                    handleChange={formik.handleChange}
-                    value={formik.values.description} />
+                    handleChange={handleChange}
+                    value={values.description} />
                 <PictureUploaderComponent
+                    key='images'
+
                     onChange={handlePictureLoad}
-                    value={formik.values.images} />
+                    value={values.images} />
                 <SubmitButtonComponent
-                    type="submit"
-                    onSubmit={handleSubmit} />
+                    onSubmit={handleFormSubmit} />
             </Form>
         </div>
     )
