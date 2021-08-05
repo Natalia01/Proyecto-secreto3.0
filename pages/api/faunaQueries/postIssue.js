@@ -13,7 +13,6 @@ export default async (req, res) => {
     return { imageUrl: url, imageId: public_id }
   })
   const resolvedUploadedImages = await Promise.all(uploadedImages)
-  console.log(resolvedUploadedImages)
   const date = new Date().toString()
   await client
     .query(

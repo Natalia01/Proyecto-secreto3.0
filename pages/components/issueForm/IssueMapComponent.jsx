@@ -2,10 +2,10 @@ import { Row, Col } from 'antd'
 import { useState } from 'react';
 import styles from '/styles/Panel.module.css'
 import IssueDetailsComponent from './IssueDetailsComponent'
-import axios from 'axios'
 
-const IssueMapComponent = ({ id, operationNumber, date, images, state, priority, description }) => {
+const IssueMapComponent = ({ id, operationNumber, date, resolvedUploadedImages, state, priority, description, setIssuesFunction }) => {
     const [visible, setVisible] = useState(false)
+    const apiRequest = { id, resolvedUploadedImages }
     return (
         <>
             <Row key={id} className={styles.listRows}>
@@ -22,15 +22,14 @@ const IssueMapComponent = ({ id, operationNumber, date, images, state, priority,
                 </Col>
                 <Col span={4}>
                     <svg className={styles.icons} onClick={async () => {
-                        await axios({ // NO ME ESTAN FUNCIONANDOOOOOO POR QUEEEEEE SI ANTES FUNCIONABAAAAAA
-                            url: '../api/faunaQueries/deleteIssue',
+                        await fetch('../api/faunaQueries/deleteIssue', { // NO ME ESTAN FUNCIONANDOOOOOO POR QUEEEEEE SI ANTES FUNCIONABAAAAAA
                             method: 'POST',
-                            body: id
+                            body: JSON.stringify(apiRequest)
                         })
-                        await axios.post('../api/destroyImages', {
+                        /* await axios.post('../api/destroyImages', {
                             method: 'POST',
                             body: images
-                        })
+                        }) */
                         await setIssuesFunction()
                     }}
                         width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">

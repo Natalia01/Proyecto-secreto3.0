@@ -10,7 +10,6 @@ const IssueDetailsComponent = ({ images, description, id }) => {
                 <Col>descripción: {description}</Col>
                 {images.map(({ imageUrl, imageId }) =>
                     <Col key={id}><img src={imageUrl} /></Col>)}
-
             </Row>
         </>
     )
