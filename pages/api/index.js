@@ -1,4 +1,4 @@
-import { client, q, Documents } from '../config/db';
+import { client, q } from '../config/db';
 export const createUser = async (email, password) => {
     await client
         .query(

@@ -14,10 +14,11 @@ function IssueListComponent({ issueList, setIssuesFunction }) {
                 <Col span={4}>Acciones</Col>
                 <Col span={4}>Estado</Col>
             </Row>
-            {issueList.map(({ ref: { "@ref": { id } }, data: { operationNumber, priority, date, resolvedUploadedImages, state, description } }) => (
+            {issueList.map(({ ref: { "@ref": { id } }, data: { email, operationNumber, priority, date, resolvedUploadedImages, state, description } }) => (
                 <IssueMapComponent
                     key={id}
                     id={id}
+                    email={email}
                     operationNumber={operationNumber}
                     priority={priority}
                     date={date}
