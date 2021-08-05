@@ -26,7 +26,6 @@ function issueForm() {
             method: 'POST',
             body: JSON.stringify(values)
         })
-
         //setIssueList([...res])
         await onFormSubmit()
     }

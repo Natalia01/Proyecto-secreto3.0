@@ -1,9 +1,9 @@
 import { client, q, Documents } from '../../config/db';
-export const logout = () => {
+export default async (req, res) => {
     client
         .query(
             q.Logout(true)
         )
-        .then((ret) => console.log(ret))
+        .then(ret => ret.json())
         .catch((err) => console.error('Error: %s', err))
 }
