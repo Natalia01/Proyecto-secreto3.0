@@ -45,7 +45,7 @@ const IssueMapComponent = ({ id, operationNumber, date, resolvedUploadedImages, 
                 <Col span={4}>
                     {state}
                 </Col>
-                {visible && <IssueDetailsComponent key={id} images={images} description={description} />}
+                {visible && <IssueDetailsComponent key={id} resolvedUploadedImages={resolvedUploadedImages} description={description} />}
             </Row>
         </>
     )

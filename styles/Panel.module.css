@@ -5,6 +5,15 @@
   justify-content: start;
   padding: 20px;
 }
+.image {
+  width: 150px;
+  height: 80px;
+  -o-object-fit: contain;
+    object-fit: contain;
+}
+.image:hover {
+  cursor:pointer;
+}
 .wrapper {
   height: 100vh;
   background: linear-gradient(
@@ -29,6 +38,7 @@
   background: #f1f6ff;
   border: 2px solid rgba(0, 98, 255, 0.2);
   padding: 20px;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.14);
 }
 .listTitles {
   justify-content: center;
