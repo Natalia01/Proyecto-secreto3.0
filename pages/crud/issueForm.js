@@ -8,9 +8,7 @@ import axios from 'axios'
 import { Formik } from 'formik'
 
 function issueForm() {
-
     const [issueList, setIssueList] = useState([])
-    const [imageValue, setImageValue] = useState([])
     const email = Cookies.get('username')
     useEffect(() => {
         setIssuesFunction()
@@ -22,14 +20,13 @@ function issueForm() {
     const onFormSubmit = () => {
         setIssuesFunction()
     }
-
-
     const submit = async values => {
-        const payload = { ...values, images: imageValue }
-        await axios.post('../api/faunaQueries/postIssue', {
+        console.log("🙂", values)
+        await fetch('../api/faunaQueries/postIssue', {
             method: 'POST',
-            body: payload
+            body: JSON.stringify(values)
         })
+
         //setIssueList([...res])
         await onFormSubmit()
     }
@@ -48,7 +45,7 @@ function issueForm() {
                     }}
 
                     onSubmit={submit}>
-                    <FormComponent setImageValue={setImageValue} />
+                    <FormComponent />
                 </Formik>
                 <IssueListComponent issueList={issueList} setIssuesFunction={setIssuesFunction} />
             </div>

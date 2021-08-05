@@ -2,7 +2,7 @@ import { Row, Col } from 'antd'
 import { useState } from 'react';
 import styles from '/styles/Panel.module.css'
 import IssueDetailsComponent from './IssueDetailsComponent'
-
+import axios from 'axios'
 
 const IssueMapComponent = ({ id, operationNumber, date, images, state, priority, description }) => {
     const [visible, setVisible] = useState(false)
@@ -22,7 +22,8 @@ const IssueMapComponent = ({ id, operationNumber, date, images, state, priority,
                 </Col>
                 <Col span={4}>
                     <svg className={styles.icons} onClick={async () => {
-                        await axios.post('../api/faunaQueries/deleteIssue', {
+                        await axios({ // NO ME ESTAN FUNCIONANDOOOOOO POR QUEEEEEE SI ANTES FUNCIONABAAAAAA
+                            url: '../api/faunaQueries/deleteIssue',
                             method: 'POST',
                             body: id
                         })
