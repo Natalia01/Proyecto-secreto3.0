@@ -5,14 +5,18 @@
   justify-content: start;
   padding: 20px;
 }
+.detailComponent {
+  width: 30rem;
+}
 .image {
   width: 150px;
   height: 80px;
-  -o-object-fit: contain;
-    object-fit: contain;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 98, 255, 0.2);
 }
 .image:hover {
   cursor:pointer;
+  border: 2px solid #4BCE7F;
 }
 .wrapper {
   height: 100vh;

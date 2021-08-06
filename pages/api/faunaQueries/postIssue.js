@@ -6,26 +6,27 @@ cloudinary.config({
   api_secret: '7OhrSLDoNqVYYFI12a-NLdIMLME'
 })
 export default async (req, res) => {
-  const { email, operationNumber, priority, description, images, state } = JSON.parse(req.body)
+  const { email, operationNumber, priority, description, images, state, seenDate } = JSON.parse(req.body)
   const uploadedImages = images.map(async imageToUpload => {
     const imageResult = await cloudinary.uploader.upload(imageToUpload, () => { })
     const { url, public_id } = imageResult
     return { imageUrl: url, imageId: public_id }
   })
   const resolvedUploadedImages = await Promise.all(uploadedImages)
-  const date = new Date().toString()
+  const sentDate = new Date().toString()
   await client
     .query(
       q.Create(
         q.Collection('issues'), {
         data: {
           email,
-          date,
+          sentDate,
           operationNumber,
           priority,
           description,
           resolvedUploadedImages,
           state,
+          seenDate
         }
       })
     ).then(() => res.json())

@@ -3,19 +3,28 @@ import { sessionCheck } from '../../components/loginCookies'
 import IssueListComponent from '../components/issueForm/issueListComponent'
 import styles from '../../styles/Panel.module.css'
 import { useEffect, useState } from 'react'
-import Cookies from 'js-cookie'
 import axios from 'axios'
 import { Formik } from 'formik'
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 function issueForm() {
     const [issueList, setIssueList] = useState([])
-    const email = Cookies.get('username')
+    const activeUser = Cookies.get('username')
+    const router = useRouter()
+    const handleLogout = () => {
+        Cookies.remove('sessionKey');
+        Cookies.remove('username');
+        Cookies.remove('password');
+        fetch('../api/faunaQueries/userLogout')
+        router.push('/login/login')
+    }
     useEffect(() => {
         setIssuesFunction()
     }, [])
     const setIssuesFunction = async () =>
         await axios.get('../api/faunaQueries/getIssuesByUser',
-            { params: { email: email.toString() } })
+            { params: { email: activeUser.toString() } })
             .then(res => setIssueList(res.data.data))
     const onFormSubmit = () => {
         setIssuesFunction()
@@ -26,7 +35,6 @@ function issueForm() {
             method: 'POST',
             body: JSON.stringify(values)
         })
-        //setIssueList([...res])
         await onFormSubmit()
     }
     return (
@@ -34,17 +42,18 @@ function issueForm() {
             <div className={styles.app}>
                 <Formik
                     initialValues={{
-                        email: '',
-                        date: '',
+                        email: activeUser,
+                        sentDate: '',
                         operationNumber: '',
                         priority: '',
                         description: '',
                         images: [],
-                        state: 'Enviado'
+                        state: 'Enviado',
+                        comment: '',
+                        seenDate: ''
                     }}
-
                     onSubmit={submit}>
-                    <FormComponent />
+                    <FormComponent handleLogout={handleLogout} />
                 </Formik>
                 <IssueListComponent issueList={issueList} setIssuesFunction={setIssuesFunction} />
             </div>

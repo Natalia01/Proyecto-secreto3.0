@@ -2,8 +2,8 @@ import { client, q } from '../../config/db';
 
 export default async function changeStatus(req, res) {
     console.log(req.body)
-    const { email, id, operationNumber, date, resolvedUploadedImages, state, priority, description } = JSON.parse(req.body)
-
+    const { email, id, operationNumber, sentDate, resolvedUploadedImages, state, priority, description } = JSON.parse(req.body)
+    const seenDate = new Date().toString()
     await client
         .query(
             q.Replace(
@@ -12,12 +12,13 @@ export default async function changeStatus(req, res) {
                 {
                     data: {
                         email: email,
-                        date: date,
+                        sentDate: sentDate,
                         operationNumber: operationNumber,
                         priority: priority,
                         description: description,
                         resolvedUploadedImages: resolvedUploadedImages,
                         state: 'Revisado',
+                        seenDate: seenDate
                     }
                 }
             )

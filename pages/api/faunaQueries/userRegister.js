@@ -1,5 +1,6 @@
-import { client, q, Documents } from '../../config/db';
-export const createUser = async (email, password) => {
+import { client, q } from '../../config/db';
+export default async (req, res) => {
+    const { lowerCaseUsername, password } = JSON.parse(req.body)
     await client
         .query(
             q.Create(q.Collection('accounts'), {
@@ -7,10 +8,10 @@ export const createUser = async (email, password) => {
                     password
                 },
                 data: {
-                    email
+                    email: lowerCaseUsername
                 }
             })
         )
-        .then(ret => ret)
-        .catch(error => console.error('Error: ', error.message));
+        .then(() => res.json())
+        .catch(error => error.message);
 };

@@ -26,24 +26,19 @@ const LoginRegister = () => {
   const [password, setPassword] = useState(''); //password state en login
   const [registerUsername, setRegisterUsername] = useState(''); //user state en registro
   const [registerPassword, setRegisterPassword] = useState(''); //password state en registro
-  const onFinish = (values) => {
-    console.log('Success:', values);
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
-  function handleUsernameChange(e) {  //actualiza el user state
-    setUsername(e.target.value.toLowerCase());
-  }
-  function handlePasswordChange(e) {//actualiza el password state
-    setPassword(e.target.value);
-  }
-  async function handleSubmitRegister(e) {
+  const onFinish = values => console.log('Success:', values);
+  const lowerCaseUsername = username.toLowerCase()
+  const onFinishFailed = errorInfo => console.log('Failed:', errorInfo);
+  const handleUsernameChange = e => setUsername(e.target.value.toLowerCase());
+  const handlePasswordChange = e => setPassword(e.target.value);
+  const handleSubmitRegister = async e => {
     e.preventDefault();
-    await createUser(username.toLowerCase(), password) //espera la query
-    alert("Usuario registrado con éxito")
+    await fetch('../api/faunaQueries/userRegister', {
+      method: 'POST',
+      body: JSON.stringify({ lowerCaseUsername, password }) //espera la query    
+    }).then(() => alert("Usuario registrado con éxito"))
   }
-  async function handleSubmitLogin(e) {
+  const handleSubmitLogin = async e => {
     e.preventDefault();
     const key = await fetch('../api/faunaQueries/userLogin', {
       method: 'POST',

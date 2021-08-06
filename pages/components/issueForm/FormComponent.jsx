@@ -1,10 +1,8 @@
 import styles from '../../../styles/Panel.module.css';
 import 'antd/dist/antd.css';
 import RadioApp from './RadioApp';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useFormikContext, Field } from 'formik';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
 import { Form } from 'antd'
 import UserComponent from './UserComponent';
 import OperationNumberComponent from './OperationNumberComponent';
@@ -12,26 +10,11 @@ import DescriptionComponent from './DescriptionComponent';
 import PictureUploaderComponent from './PictureUploaderComponent';
 import SubmitButtonComponent from './SubmitButtonComponent';
 
-const FormComponent = () => {
+const FormComponent = ({ handleLogout }) => {
     const { values, handleChange, handleSubmit, setFieldValue } = useFormikContext()
-    const router = useRouter()
-    const activeUser = Cookies.get('username')
-    const sessionCookie = Cookies.get('sessionKey')
-    useEffect(() => {
-        values.email = activeUser
-    }, [sessionCookie])
-    const handleRadio = (e) => {
+    const handleRadio = e => {
         values.priority = e
         handleChange
-    }
-    const handleLogout = () => {
-        Cookies.remove('sessionKey');
-        Cookies.remove('username');
-        Cookies.remove('password');
-        fetch('../api/faunaQueries/userLogout')
-        if (!Cookies.get('sessionKey')) {
-            router.push('/login/login')
-        }
     }
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
