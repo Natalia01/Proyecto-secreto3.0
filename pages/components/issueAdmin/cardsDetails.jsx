@@ -5,13 +5,14 @@ import 'antd/dist/antd.css';
 import Link from 'next/link'
 import { Card, Button, Comment, Avatar, Form, List, Input } from 'antd';
 import moment from 'moment';
+import styles from './PanelAdmin.module.css';
 
 
 const { TextArea } = Input;
-const cardsDetails = () => {
+const CardsDetails = ({data}) => {
     return(
         <div className="site-card-border-less-wrapper">
-        <Card title="N° Operación:" key='name' bordered={false} style={{ width: 300 }}>
+        <Card title="N° Operación:"  bordered={false} style={{ width: 300 }}>
             <p><b>Descripción:</b> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam veritatis molestias quos dolor nesciunt eaque commodi iure aperiam doloremque, dolore iste soluta, optio ea praesentium accusamus! Quisquam consectetur culpa odit.</p>
             <p>Severidad:</p>
             <Button type="primary">Ver adjuntos</Button>
@@ -29,8 +30,7 @@ const cardsDetails = () => {
   }
 `
 }
-
 </style>
 
 
-export default cardsDetails;
+export default CardsDetails;

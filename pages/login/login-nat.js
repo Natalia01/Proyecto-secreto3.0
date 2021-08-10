@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { Form, Input, Button, Checkbox } from 'antd';
-import Layout from '../../components/layout'
 import 'antd/dist/antd.css';
 import { useEffect, useState } from 'react';
 import fauna, { query } from 'faunadb';
 import {useRouter} from 'next/router'
 import { Alert, Space, Col } from 'antd'
+
 
 
 //Se conecta a fauna
