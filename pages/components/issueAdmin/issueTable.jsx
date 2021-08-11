@@ -96,7 +96,7 @@ const IssuesTable = () => {
       <div>
          <h1 className = "titulo">Administrador de problemas</h1>
         <Table columns={columns} dataSource={data}/>
-        <button className="revisado">Problemas revisados</button>
+       
           
 
         <style jsx>{`
