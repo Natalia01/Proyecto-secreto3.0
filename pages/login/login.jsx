@@ -3,9 +3,8 @@ import 'antd/dist/antd.css';
 import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import Cookies from 'js-cookie'
-import { createUser, login } from '../api';
 import { useRouter } from 'next/router';
-import {sessionCheck} from '/components/loginCookies'
+import { sessionCheck } from '/components/loginCookies'
 
 const layout = {
   labelCol: {
@@ -27,27 +26,24 @@ const LoginRegister = () => {
   const [password, setPassword] = useState(''); //password state en login
   const [registerUsername, setRegisterUsername] = useState(''); //user state en registro
   const [registerPassword, setRegisterPassword] = useState(''); //password state en registro
-  const onFinish = (values) => {
-    console.log('Success:', values);
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
-  function handleUsernameChange(e) {  //actualiza el user state
-    setUsername(e.target.value);
-  }
-  function handlePasswordChange(e) {//actualiza el password state
-    setPassword(e.target.value);
-  }
-  async function handleSubmitRegister(e) {
+  const onFinish = values => console.log('Success:', values);
+  const lowerCaseUsername = username.toLowerCase()
+  const onFinishFailed = errorInfo => console.log('Failed:', errorInfo);
+  const handleUsernameChange = e => setUsername(e.target.value.toLowerCase());
+  const handlePasswordChange = e => setPassword(e.target.value);
+  const handleSubmitRegister = async e => {
     e.preventDefault();
-    resetInputField();
-    await createUser(username, password) //espera la query
-    alert("Usuario registrado con éxito")
+    await fetch('../api/faunaQueries/userRegister', {
+      method: 'POST',
+      body: JSON.stringify({ lowerCaseUsername, password }) //espera la query    
+    }).then(() => alert("Usuario registrado con éxito"))
   }
-  async function handleSubmitLogin(e) {
+  const handleSubmitLogin = async e => {
     e.preventDefault();
-    const key = await login(username, password)
+    const key = await fetch('../api/faunaQueries/userLogin', {
+      method: 'POST',
+      body: JSON.stringify({ username, password })
+    })
     if (key) {
       Cookies.set('sessionKey', key.secret)
       Cookies.set('username', username)
@@ -66,15 +62,17 @@ const LoginRegister = () => {
             {...layout}
             name="basic"
             initialValues={{
-            remember: true,}}
+              remember: true,
+            }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}>
             <Form.Item
               label="Username"
               value={username}
               rules={[{
-                  required: true,
-                  message: 'Please input your username!',},]}>
+                required: true,
+                message: 'Please input your username!',
+              },]}>
               <div className={styles.loginTextInput}>
                 <Input
                   onChange={handleUsernameChange} />@klog.co
@@ -84,8 +82,9 @@ const LoginRegister = () => {
               label="Password"
               value={password}
               rules={[{
-                  required: true,
-                  message: 'Please input your password!',},]}>
+                required: true,
+                message: 'Please input your password!',
+              },]}>
               <div className={styles.loginTextInput}>
                 <Input.Password onChange={handlePasswordChange} />
               </div>
@@ -98,46 +97,49 @@ const LoginRegister = () => {
                 Iniciar sesión
               </Button>
             </Form.Item>
-          </Form>          
+          </Form>
         </div>
         <div className={styles.registration}>
-        <div className={styles.form}>
-          <h1 className={styles.h1}>Registro de usuario</h1>
-          <Form
-            id='register'
-            {...layout}
-            name="basic"
-            initialValues={{
-            remember: true,}}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}>
-            <Form.Item
-              label="Username"
-              value={registerUsername}
-              rules={[{
+          <div className={styles.form}>
+            <h1 className={styles.h1}>Registro de usuario</h1>
+            <Form
+              id='register'
+              {...layout}
+              name="basic"
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}>
+              <Form.Item
+                label="Username"
+                value={registerUsername}
+                rules={[{
                   required: true,
-                  message: 'Please input your username!',},]}>
-              <div className={styles.loginTextInput}>
-                <Input onChange={handleUsernameChange}/>@klog.co
-              </div>
-            </Form.Item>
-            <Form.Item
-              label="Password"
-              value={registerPassword}
-              rules={[{
+                  message: 'Please input your username!',
+                },]}>
+                <div className={styles.loginTextInput}>
+                  <Input onChange={handleUsernameChange} />@klog.co
+                </div>
+              </Form.Item>
+              <Form.Item
+                label="Password"
+                value={registerPassword}
+                rules={[{
                   required: true,
-                  message: 'Please input your password!',},]}>
-              <div className={styles.loginTextInput}>
-                <Input.Password
-                  onChange={handlePasswordChange} />
-              </div>
-            </Form.Item>
-            <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit" onClick={handleSubmitRegister}>
-                Registrarse
-              </Button>
-            </Form.Item>
-          </Form>          
+                  message: 'Please input your password!',
+                },]}>
+                <div className={styles.loginTextInput}>
+                  <Input.Password
+                    onChange={handlePasswordChange} />
+                </div>
+              </Form.Item>
+              <Form.Item {...tailLayout}>
+                <Button type="primary" htmlType="submit" onClick={handleSubmitRegister}>
+                  Registrarse
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
         </div>
       </div>

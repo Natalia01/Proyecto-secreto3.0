@@ -7,7 +7,7 @@ function ButtonProblemasCheck (){
     return(
              <Button
                 type="primary">
-                    <Link href= './admin/problemasRevisados'>
+                    <Link href= './problemasRevisados'>
                     Problemas Revisados
                     </Link>
                     

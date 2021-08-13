@@ -1,9 +1,11 @@
 import React from 'react';
+import IssueCheckTable from '../components/issueAdmin/issueCheckTable';
 
-const hola = () =>{
+const problemasRevisados = () =>{
+    const issueCheckTable={};
     return(
-        <h1>hola</h1>
+        <IssueCheckTable issueCheckTable = {issueCheckTable}/>
     )
 }
 
-export default hola;
+export default problemasRevisados;
