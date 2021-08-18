@@ -7,6 +7,7 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import styles from '../../../styles/Panel.module.css'
 
 const IssuesTable = ({ data, setIssuesFunction }) => {
   const cardsDetails = {};
@@ -26,7 +27,7 @@ const IssuesTable = ({ data, setIssuesFunction }) => {
       key: 'sentDate',
     },
     {
-      title: 'Descripción',
+      title: 'Código',
       dataIndex: 'operationNumber',
       key: 'operationNumber',
     },
@@ -37,7 +38,7 @@ const IssuesTable = ({ data, setIssuesFunction }) => {
       render: tags => (
         <>
           {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
+            let color = tag.length > 7 ? 'geekblue' : 'green';
             if (tag === 'Customer') {
               color = 'volcano';
             }
@@ -52,8 +53,12 @@ const IssuesTable = ({ data, setIssuesFunction }) => {
     },
     {
       title: 'Severidad',
-      dataIndex: 'prioridad',
-      key: 'prioridad',
+      dataIndex: 'priority',
+      key: 'priority',
+      render: (priority) => (
+        <div className={`${styles.circleSpan}
+                    ${styles[`priority-${priority}`]}`} />
+      )
 
     },
     {
@@ -97,7 +102,6 @@ const IssuesTable = ({ data, setIssuesFunction }) => {
 
   return (
     <div>
-      <button onClick={() => console.log(data)}>ALLISSUES</button>
       <h1 className="titulo">Administrador de problemas</h1>
       <Table columns={columns} dataSource={data1} />
 
