@@ -12,7 +12,6 @@ const IssuesTable = ({ data, setIssuesFunction }) => {
   const cardsDetails = {};
   const { RangePicker } = DatePicker;
   const data1 = data.map(({ data }) => data)
-  console.log(data1)
   const dateFormat = 'YYYY/MM/DD';
   const columns = [
     {

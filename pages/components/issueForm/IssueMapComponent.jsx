@@ -3,9 +3,9 @@ import { useState } from 'react';
 import styles from '/styles/Panel.module.css'
 import IssueDetailsComponent from './IssueDetailsComponent'
 
-const IssueMapComponent = ({ email, id, operationNumber, sentDate, resolvedUploadedImages, state, priority, description, seenDate, setIssuesFunction }) => {
+const IssueMapComponent = ({ email, id, operationNumber, sentDate, resolvedUploadedImages, state, priority, description, seenDate, setIssuesFunction, tags }) => {
     const [visible, setVisible] = useState(false)
-    const apiRequest = { email, id, operationNumber, sentDate, resolvedUploadedImages, state, priority, description, seenDate }
+    const apiRequest = { email, id, operationNumber, sentDate, resolvedUploadedImages, state, priority, description, seenDate, tags }
     return (
         <>
             <Row key={id} className={styles.listRows}>
@@ -48,7 +48,7 @@ const IssueMapComponent = ({ email, id, operationNumber, sentDate, resolvedUploa
                 <Col span={4}>
                     {state}
                 </Col>
-                {visible && <IssueDetailsComponent key={id} email={email} resolvedUploadedImages={resolvedUploadedImages} description={description} />}
+                {visible && <IssueDetailsComponent tags={tags} key={id} email={email} resolvedUploadedImages={resolvedUploadedImages} description={description} />}
             </Row>
         </>
     )

@@ -9,11 +9,16 @@ import OperationNumberComponent from './OperationNumberComponent';
 import DescriptionComponent from './DescriptionComponent';
 import PictureUploaderComponent from './PictureUploaderComponent';
 import SubmitButtonComponent from './SubmitButtonComponent';
+import TagsComponent from './TagsComponent'
 
 const FormComponent = ({ handleLogout }) => {
     const { values, handleChange, handleSubmit, setFieldValue } = useFormikContext()
-    const handleRadio = e => { //maneja  'manualmente' el cambio de estado de los botones radio
+    const onRadio = e => { //maneja  'manualmente' el cambio de estado de los botones radio
         values.priority = e
+        handleChange
+    }
+    const handleChecklist = e => {
+        values.tags = e
         handleChange
     }
     const toBase64 = file => new Promise((resolve, reject) => { //convierte la imagen subida a BASE64 para poder subirla a cloudinary
@@ -46,10 +51,13 @@ const FormComponent = ({ handleLogout }) => {
                     id="priority"
                     key="radio"
                     value={values.priority}
-                    onRadio={handleRadio} />
+                    onRadio={onRadio} />
                 <DescriptionComponent
                     handleChange={handleChange}
                     value={values.description} />
+                <TagsComponent
+                    handleChecklist={handleChecklist}
+                    value={values.tags} />
                 <Field name="images">
                     {pictureUploader}
                 </Field>

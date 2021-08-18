@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import styles from '/styles/Panel.module.css'
 import Cookies from 'js-cookie';
 
-const IssueDetailsComponent = ({ email, resolvedUploadedImages, description, id }) => {
+const IssueDetailsComponent = ({ email, resolvedUploadedImages, description, id, tags }) => {
     Cookies.get('username')
     return (
         <div className={styles.list}>
@@ -21,6 +21,12 @@ const IssueDetailsComponent = ({ email, resolvedUploadedImages, description, id 
                 {resolvedUploadedImages.map(({ imageUrl }) =>
                     <Col key={id}><img src={imageUrl} onClick={() => window.open(imageUrl)} className={styles.image} /></Col>)}
 
+            </Row>
+            <Row className={styles.detailComponent}>
+                <Col span={8}>
+                    Áreas:
+                </Col>
+                <Col>{tags}</Col>
             </Row>
         </div>
     )
