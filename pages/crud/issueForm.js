@@ -12,25 +12,24 @@ function issueForm() {
     const [issueList, setIssueList] = useState([])
     const activeUser = Cookies.get('username')
     const router = useRouter()
-    const handleLogout = () => {
+    const handleLogout = () => { //elimina las cookies, las credenciales y te manda a la pagina de login
         Cookies.remove('sessionKey');
         Cookies.remove('username');
         Cookies.remove('password');
         fetch('../api/faunaQueries/userLogout')
         router.push('/login/login')
     }
-    useEffect(() => {
+    useEffect(() => { //para que la lista de problemas se actualice cada vez que se envía un nuevo problema
         setIssuesFunction()
     }, [])
-    const setIssuesFunction = async () =>
+    const setIssuesFunction = async () => //esta es la función que actualiza la lista
         await axios.get('../api/faunaQueries/getIssuesByUser',
             { params: { email: activeUser.toString() } })
             .then(res => setIssueList(res.data.data))
     const onFormSubmit = () => {
         setIssuesFunction()
     }
-    const submit = async values => {
-        console.log("🙂", values)
+    const submit = async values => { //sube la información del problema a la base de datos
         await fetch('../api/faunaQueries/postIssue', {
             method: 'POST',
             body: JSON.stringify(values)
@@ -50,7 +49,8 @@ function issueForm() {
                         images: [],
                         state: 'Enviado',
                         comment: '',
-                        seenDate: ''
+                        seenDate: '',
+                        tags: []
                     }}
                     onSubmit={submit}>
                     <FormComponent handleLogout={handleLogout} />
@@ -61,4 +61,4 @@ function issueForm() {
     )
 }
 
-export default sessionCheck(issueForm);
+export default sessionCheck(issueForm); //esta envuelto en un HOC para que verifique que la sesión está iniciada

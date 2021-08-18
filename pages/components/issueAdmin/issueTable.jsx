@@ -3,103 +3,108 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import Link from 'next/link'
 import { Alert } from 'antd';
-import { DatePicker} from 'antd';
+import { DatePicker } from 'antd';
 import moment from 'moment';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
-const IssuesTable = () => {
-    const cardsDetails={};
-    const { RangePicker } = DatePicker;
-  
-    const dateFormat = 'YYYY/MM/DD';
-    const columns = [
-      {
-        title: 'N° Operación',
-        dataIndex: 'name',
-        key: 'name',
-        render: text => <a>{text}</a>,
-      },
-      {
-        title: 'Fecha',
-        dataIndex: 'date',
-        key: 'date',
-      },
-      {
-        title: 'Descripción',
-        dataIndex: 'address',
-        key: 'address',
-      },
-      {
-        title: 'Área',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: tags => (
-          <>
-            {tags.map(tag => {
-              let color = tag.length > 5 ? 'geekblue' : 'green';
-              if (tag === 'Customer') {
-                color = 'volcano';
-              }
-              return (
-                <Tag color={color} key={tag}>
-                  {tag.toUpperCase()}
-                </Tag>
-              );
-            })}
-          </>
-        ),
-      },
-      {
-        title: 'Severidad',
-        key: 'severidad',
-       
-      },
-      {
-        title: 'Acciones',
-        key: 'action',
-        render: (text, record) => (
-          <Space size="middle">
-            <Link href = '/admin/cardsDetails'>
+const IssuesTable = ({ data, setIssuesFunction }) => {
+  const cardsDetails = {};
+  const { RangePicker } = DatePicker;
+  const data1 = data.map(({ data }) => data)
+  console.log(data1)
+  const dateFormat = 'YYYY/MM/DD';
+  const columns = [
+    {
+      title: 'N° Operación',
+      dataIndex: 'email',
+      key: 'email',
+      render: text => <a>{text}</a>,
+    },
+    {
+      title: 'Fecha',
+      dataIndex: 'sentDate',
+      key: 'sentDate',
+    },
+    {
+      title: 'Descripción',
+      dataIndex: 'operationNumber',
+      key: 'operationNumber',
+    },
+    {
+      title: 'Área',
+      key: 'tags',
+      dataIndex: 'tags',
+      render: tags => (
+        <>
+          {tags.map(tag => {
+            let color = tag.length > 5 ? 'geekblue' : 'green';
+            if (tag === 'Customer') {
+              color = 'volcano';
+            }
+            return (
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
+    {
+      title: 'Severidad',
+      dataIndex: 'prioridad',
+      key: 'prioridad',
+
+    },
+    {
+      title: 'Acciones',
+      key: 'action',
+      render: (text, record) => (
+        <Space size="middle">
+          <Link href='/admin/cardsDetails'>
             <a>Ver detalles</a>
-            </Link>
-            
-            <a>Revisado</a>
-          </Space>
-        ),
-      },
-    ];
-    
-    const data = [
-      {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-      },
-      {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['Customer'],
-      },
-      {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-      }
-    ];
-  
-    return(
-      <div>
-         <h1 className = "titulo">Administrador de problemas</h1>
-        <Table columns={columns} dataSource={data}/>
-       
-          
+          </Link>
 
-        <style jsx>{`
+          <a>Revisado</a>
+        </Space>
+      ),
+    },
+  ];
+
+  /*  const data = [
+     {
+       key: '1',
+       name: 'John Brown',
+       age: 32,
+       address: 'New York No. 1 Lake Park',
+       tags: ['nice', 'developer'],
+     },
+     {
+       key: '2',
+       name: 'Jim Green',
+       age: 42,
+       address: 'London No. 1 Lake Park',
+       tags: ['Customer'],
+     },
+     {
+       key: '3',
+       name: 'Joe Black',
+       age: 32,
+       address: 'Sidney No. 1 Lake Park',
+       tags: ['cool', 'teacher'],
+     }
+   ]; */
+
+  return (
+    <div>
+      <button onClick={() => console.log(data)}>ALLISSUES</button>
+      <h1 className="titulo">Administrador de problemas</h1>
+      <Table columns={columns} dataSource={data1} />
+
+
+
+      <style jsx>{`
         .titulo{
           text-align: center;
           margin-top: 30px;
@@ -129,9 +134,9 @@ const IssuesTable = () => {
           
         }
       }`
-        } </style>
-      </div> 
-    )
-  }
-  
-  export default IssuesTable
+      } </style>
+    </div>
+  )
+}
+
+export default IssuesTable

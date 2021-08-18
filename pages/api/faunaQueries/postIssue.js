@@ -6,14 +6,15 @@ cloudinary.config({
   api_secret: '7OhrSLDoNqVYYFI12a-NLdIMLME'
 })
 export default async (req, res) => {
-  const { email, operationNumber, priority, description, images, state, seenDate } = JSON.parse(req.body)
+  const { email, operationNumber, priority, description, images, state, seenDate, tags } = JSON.parse(req.body)
   const uploadedImages = images.map(async imageToUpload => {
     const imageResult = await cloudinary.uploader.upload(imageToUpload, () => { })
     const { url, public_id } = imageResult
     return { imageUrl: url, imageId: public_id }
   })
   const resolvedUploadedImages = await Promise.all(uploadedImages)
-  const sentDate = new Date().toString()
+  const sentDate = new Date().toLocaleString([], //convierte la hora en la que se envió el problema a formato DD/MM/YYYY hh:mm
+    { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
   await client
     .query(
       q.Create(
@@ -26,7 +27,8 @@ export default async (req, res) => {
           description,
           resolvedUploadedImages,
           state,
-          seenDate
+          seenDate,
+          tags
         }
       })
     ).then(() => res.json())

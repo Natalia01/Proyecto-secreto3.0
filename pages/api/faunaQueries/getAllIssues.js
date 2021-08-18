@@ -1,5 +1,6 @@
 import { client, q, Documents } from '../../config/db';
-export const getAllIssues = async (email) => { //este es el que debería usar la Nati pa tener todos los problemas
+export default async function getAllIssues(req, res) { //este es el que debería usar la Nati pa tener todos los problemas
+
     const result = await client
         .query(
             q.Map(
@@ -8,10 +9,9 @@ export const getAllIssues = async (email) => { //este es el que debería usar la
                         q.Collection('issues')
                     )
                 ),
-                q.Lambda(() => q.Get(email))
+                q.Lambda(email => q.Get(email))
             )
-        )
-        .then(ret => ret.data)
+        ).then(ret => res.json(ret))
         .catch(error => console.log('Error: ', error.message))
-    return result
+    return res
 }

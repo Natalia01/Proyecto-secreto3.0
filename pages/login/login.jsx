@@ -26,11 +26,12 @@ const LoginRegister = () => {
   const [password, setPassword] = useState(''); //password state en login
   const [registerUsername, setRegisterUsername] = useState(''); //user state en registro
   const [registerPassword, setRegisterPassword] = useState(''); //password state en registro
-  const onFinish = values => console.log('Success:', values);
   const lowerCaseUsername = username.toLowerCase()
-  const onFinishFailed = errorInfo => console.log('Failed:', errorInfo);
   const handleUsernameChange = e => setUsername(e.target.value.toLowerCase());
   const handlePasswordChange = e => setPassword(e.target.value);
+
+  const onFinish = values => console.log('Success:', values);
+  const onFinishFailed = errorInfo => console.log('Failed:', errorInfo);
   const handleSubmitRegister = async e => {
     e.preventDefault();
     await fetch('../api/faunaQueries/userRegister', {
@@ -78,6 +79,7 @@ const LoginRegister = () => {
                   onChange={handleUsernameChange} />@klog.co
               </div>
             </Form.Item>
+
             <Form.Item
               label="Password"
               value={password}

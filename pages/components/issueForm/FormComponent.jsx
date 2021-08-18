@@ -12,17 +12,17 @@ import SubmitButtonComponent from './SubmitButtonComponent';
 
 const FormComponent = ({ handleLogout }) => {
     const { values, handleChange, handleSubmit, setFieldValue } = useFormikContext()
-    const handleRadio = e => {
+    const handleRadio = e => { //maneja  'manualmente' el cambio de estado de los botones radio
         values.priority = e
         handleChange
     }
-    const toBase64 = file => new Promise((resolve, reject) => {
+    const toBase64 = file => new Promise((resolve, reject) => { //convierte la imagen subida a BASE64 para poder subirla a cloudinary
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
     });
-    const pictureUploader = ({ field: { value } }) => {
+    const pictureUploader = ({ field: { value } }) => {//otorga el valor de la imagen al componente y lo renderiza
         const handlePictureLoad = async file => {
             const image = await toBase64(file.file.originFileObj);
             setFieldValue('images', [...value, image]);

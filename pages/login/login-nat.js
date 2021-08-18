@@ -1,22 +1,11 @@
 import Link from 'next/link'
 import { Form, Input, Button, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
+import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react';
 import fauna, { query } from 'faunadb';
 import { useRouter } from 'next/router'
 import { Alert, Space, Col } from 'antd'
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 7a930f79f8ef4c6494d9e870d57ff94d9c52d77f
-//Se conecta a fauna
-var client = new fauna.Client({
-  secret: 'fnAEMaWwwhACBrMqNkUnj5fkK7pqMPprRQLcmyVr',
-  keepAlive: false,
-})
-var q = fauna.query
 const layout = {
   labelCol: {
     span: 8,
@@ -32,23 +21,27 @@ const tailLayout = {
   },
 };
 const Demo = () => {
+  const [username, setUsername] = useState(''); //user state en login
+  const [password, setPassword] = useState(''); //password state en login
   const [error, setError] = useState("")
   const router = useRouter()
-  const onFinish = async values => {
-    let result = await client.paginate(
-      q.Match(
-        q.Index('get_login'), [values.username, values.password])
-    )
-    result
-      .map(ref => q.Get(ref))
-      .each(page => {
-        if (page.length > 0) {
-          router.push('/admin/issueAdmin')
-        } else {
-          setError("Datos incorrectos"); // Logs the retrieved documents.
-        }
-      })
+  const handleUsernameChange = e => setUsername(e.target.value.toLowerCase());
+  const handlePasswordChange = e => setPassword(e.target.value);
+  const handleSubmitLogin = async e => {
+    e.preventDefault();
+    const key = await fetch('../api/faunaQueries/userLogin', {
+      method: 'POST',
+      body: JSON.stringify({ username, password })
+    })
+    if (key) {
+      Cookies.set('sessionKey', key.secret)
+      Cookies.set('username', username)
+    }
+    if (Cookies.get('sessionKey')) {
+      router.push('../admin/issueAdmin')
+    }
   };
+  const onFinish = values => console.log('Success:', values);
   const onFinishFailed = errorInfo => console.log('Failed:', errorInfo);
   return (
     <div>
@@ -66,7 +59,7 @@ const Demo = () => {
       >
         <Form.Item
           label="Username"
-          name="username"
+          value={username}
           rules={[
             {
               required: true,
@@ -74,12 +67,13 @@ const Demo = () => {
             },
           ]}
         >
-          <Input />
+          <Input
+            onChange={handleUsernameChange} />@klog.co
         </Form.Item>
 
         <Form.Item
           label="Password"
-          name="password"
+          value={password}
           rules={[
             {
               required: true,
@@ -87,14 +81,14 @@ const Demo = () => {
             },
           ]}
         >
-          <Input.Password />
+          <Input.Password onChange={handlePasswordChange} />
         </Form.Item>
 
         <Form.Item {...tailLayout} name="remember" valuePropName="checked">
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" onClick={handleSubmitLogin}>
             Submit
           </Button>
         </Form.Item>
