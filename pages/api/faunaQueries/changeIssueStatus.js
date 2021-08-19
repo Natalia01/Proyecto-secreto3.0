@@ -1,8 +1,7 @@
 import { client, q } from '../../config/db';
 
 export default async function changeStatus(req, res) {
-    console.log(req.body)
-    const { email, id, operationNumber, sentDate, resolvedUploadedImages, state, priority, description } = JSON.parse(req.body)
+    const { activeReviewedIssue: { email, id, operationNumber, sentDate, resolvedUploadedImages, state, priority, description, tags }, issueState } = JSON.parse(req.body)
     const seenDate = new Date().toString()
     await client
         .query(
@@ -17,8 +16,9 @@ export default async function changeStatus(req, res) {
                         priority: priority,
                         description: description,
                         resolvedUploadedImages: resolvedUploadedImages,
-                        state: 'Revisado',
-                        seenDate: seenDate
+                        state: issueState,
+                        seenDate: seenDate,
+                        tags: tags
                     }
                 }
             )

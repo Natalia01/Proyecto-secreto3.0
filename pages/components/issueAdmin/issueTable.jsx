@@ -6,12 +6,12 @@ import { Alert } from 'antd';
 import { DatePicker } from 'antd';
 import styles from '../../../styles/Panel.module.css'
 
-const IssuesTable = ({ setActiveIssue, activeIssue, data }) => {
-  const cardsDetails = {};
-  const { RangePicker } = DatePicker;
+const IssuesTable = ({ setIssuesFunction, setActiveIssue, activeIssue, data }) => {
   const data1 = data.map(({ ref: { '@ref': { id } }, data }) => { return { id, ...data } })
-  const dateFormat = 'YYYY/MM/DD';
   let activeDetail
+  let reviewedIssue
+  let solvedIssue
+  let issueState
   const columns = [
     {
       title: 'N° Operación',
@@ -59,16 +59,42 @@ const IssuesTable = ({ setActiveIssue, activeIssue, data }) => {
       )
     },
     {
+      title: 'Estado',
+      dataIndex: 'state',
+      key: 'state'
+    },
+    {
       title: 'Acciones',
       dataIndex: 'id',
       key: 'id',
       render: (id) => (
         <Space size="middle">
-          <div className={styles.icons} onClick={async () => {
+          <a className={styles.icons} onClick={async () => {
             activeDetail = id
             setActiveIssue(data.find(({ ref: { '@ref': { id } } }) => id === activeDetail))
-          }}>Ver detalles</div>
-          <a>Revisado</a>
+          }}>Ver detalles</a>
+          <a onClick={async () => {
+            issueState = 'Revisado'
+            reviewedIssue = id
+            const activeReviewedIssue = data1.find(({ id }) => id === reviewedIssue)
+            const apiRequest = { activeReviewedIssue, issueState }
+            await fetch('../api/faunaQueries/changeIssueStatus', {
+              method: 'POST',
+              body: JSON.stringify(apiRequest)
+            })
+            await setIssuesFunction()
+          }}>Revisado</a>
+          <a onClick={async () => {
+            issueState = 'Solucionado'
+            reviewedIssue = id
+            const activeReviewedIssue = data1.find(({ id }) => id === reviewedIssue)
+            const apiRequest = { activeReviewedIssue, issueState }
+            await fetch('../api/faunaQueries/changeIssueStatus', {
+              method: 'POST',
+              body: JSON.stringify(apiRequest)
+            })
+            await setIssuesFunction()
+          }}>Solucionado</a>
         </Space>
       ),
     },

@@ -9,11 +9,13 @@ import styles from '../../../styles/Panel.module.css';
 
 const { TextArea } = Input;
 const CardsDetails = ({ activeIssue, data }) => {
-  const { data: { operationNumber, priority, sentDate, resolvedUploadedImages, description, id, tags } = {} } = activeIssue
+  const { data: { email, operationNumber, priority, sentDate, resolvedUploadedImages, description, id, tags } = {} } = activeIssue
   return (
     <div className="site-card-border-less-wrapper">
       <Card title={`N° Operación: ${operationNumber}`} bordered={false} style={{ width: 300 }}>
         <Row className={styles.detailComponent}>
+          <Col span={8}>Usuario: </Col>
+          <Col span={14}>{email}</Col>
         </Row>
         <Row className={styles.detailComponent}>
           <Col span={8}>Descripción: </Col>

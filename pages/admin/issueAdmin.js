@@ -25,6 +25,7 @@ const IssueAdmin = () => {
       <Row>
         <Col span={16}>
           <IssuesTable
+            setIssuesFunction={setIssuesFunction}
             setActiveIssue={setActiveIssue}
             activeIssue={activeIssue}
             data={issueList} />  </Col>
