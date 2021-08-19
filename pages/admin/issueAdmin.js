@@ -11,28 +11,31 @@ import ButtonProblemasCheck from '../components/issueAdmin/ButtonProblems'
 import { Row, Col } from 'antd';
 import axios from 'axios';
 
-const issueAdmin = () => {
+const IssueAdmin = () => {
   const [issueList, setIssueList] = useState([])
+  const [activeIssue, setActiveIssue] = useState({})
   const setIssuesFunction = async () => await axios.get('../api/faunaQueries/getAllIssues')
     .then(res => setIssueList(res.data.data))
   useEffect(() => {
     setIssuesFunction()
   }, [])
-  const cardsDetails = {};
-  const issuesTable = {};
-  const buttonProblemasCheck = {};
+
   return (
     <div className="cards">
       <Row>
-        <Col span={16}><IssuesTable data={issueList} setIssuesFunction={setIssuesFunction} />  </Col>
-        <Col span={8}><CardsDetails /></Col>
+        <Col span={16}>
+          <IssuesTable
+            setActiveIssue={setActiveIssue}
+            activeIssue={activeIssue}
+            data={issueList} />  </Col>
+        <Col span={8}>{<CardsDetails activeIssue={activeIssue} />}</Col>
         <ButtonProblemasCheck />
       </Row>
     </div>
   )
 }
 
-export default issueAdmin
+export default IssueAdmin
 
 
 

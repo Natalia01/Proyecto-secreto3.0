@@ -19,13 +19,13 @@ function issueForm() {
         fetch('../api/faunaQueries/userLogout')
         router.push('/login/login')
     }
-    useEffect(() => { //para que la lista de problemas se actualice cada vez que se envía un nuevo problema
-        setIssuesFunction()
-    }, [])
     const setIssuesFunction = async () => //esta es la función que actualiza la lista
         await axios.get('../api/faunaQueries/getIssuesByUser',
             { params: { email: activeUser.toString() } })
             .then(res => setIssueList(res.data.data))
+    useEffect(() => { //para que la lista de problemas se actualice cada vez que se envía un nuevo problema
+        setIssuesFunction()
+    }, [])
     const onFormSubmit = () => {
         setIssuesFunction()
     }

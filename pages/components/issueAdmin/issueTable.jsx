@@ -4,16 +4,14 @@ import 'antd/dist/antd.css';
 import Link from 'next/link'
 import { Alert } from 'antd';
 import { DatePicker } from 'antd';
-import moment from 'moment';
-import Cookies from 'js-cookie';
-import axios from 'axios';
 import styles from '../../../styles/Panel.module.css'
 
-const IssuesTable = ({ data, setIssuesFunction }) => {
+const IssuesTable = ({ setActiveIssue, activeIssue, data }) => {
   const cardsDetails = {};
   const { RangePicker } = DatePicker;
-  const data1 = data.map(({ data }) => data)
+  const data1 = data.map(({ ref: { '@ref': { id } }, data }) => { return { id, ...data } })
   const dateFormat = 'YYYY/MM/DD';
+  let activeDetail
   const columns = [
     {
       title: 'N° Operación',
@@ -59,54 +57,26 @@ const IssuesTable = ({ data, setIssuesFunction }) => {
         <div className={`${styles.circleSpan}
                     ${styles[`priority-${priority}`]}`} />
       )
-
     },
     {
       title: 'Acciones',
-      key: 'action',
-      render: (text, record) => (
+      dataIndex: 'id',
+      key: 'id',
+      render: (id) => (
         <Space size="middle">
-          <Link href='/admin/cardsDetails'>
-            <a>Ver detalles</a>
-          </Link>
-
+          <div className={styles.icons} onClick={async () => {
+            activeDetail = id
+            setActiveIssue(data.find(({ ref: { '@ref': { id } } }) => id === activeDetail))
+          }}>Ver detalles</div>
           <a>Revisado</a>
         </Space>
       ),
     },
   ];
-
-  /*  const data = [
-     {
-       key: '1',
-       name: 'John Brown',
-       age: 32,
-       address: 'New York No. 1 Lake Park',
-       tags: ['nice', 'developer'],
-     },
-     {
-       key: '2',
-       name: 'Jim Green',
-       age: 42,
-       address: 'London No. 1 Lake Park',
-       tags: ['Customer'],
-     },
-     {
-       key: '3',
-       name: 'Joe Black',
-       age: 32,
-       address: 'Sidney No. 1 Lake Park',
-       tags: ['cool', 'teacher'],
-     }
-   ]; */
-
   return (
     <div>
       <h1 className="titulo">Administrador de problemas</h1>
       <Table columns={columns} dataSource={data1} />
-
-
-
       <style jsx>{`
         .titulo{
           text-align: center;
