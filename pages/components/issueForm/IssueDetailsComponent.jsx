@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import styles from '/styles/Panel.module.css'
 import Cookies from 'js-cookie';
 
-const IssueDetailsComponent = ({ email, resolvedUploadedImages, description, id, tags, comment }) => {
+const IssueDetailsComponent = ({ email, resolvedUploadedImages, description, id, tags, comment, seenDate, solvedDate }) => {
     Cookies.get('username')
     return (
         <div className={styles.list}>
@@ -36,6 +36,22 @@ const IssueDetailsComponent = ({ email, resolvedUploadedImages, description, id,
                     {comment}
                 </Col>
             </Row>
+            {seenDate && <Row className={styles.detailComponent}>
+                <Col span={8}>
+                    Fecha de revisión:
+                </Col>
+                <Col>
+                    {seenDate}
+                </Col>
+            </Row>}
+            {solvedDate && <Row className={styles.detailComponent}>
+                <Col span={8}>
+                    Fecha de solución:
+                </Col>
+                <Col>
+                    {solvedDate}
+                </Col>
+            </Row>}
         </div>
     )
 }

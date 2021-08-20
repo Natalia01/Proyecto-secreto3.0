@@ -14,7 +14,27 @@ function IssueListComponent({ issueList, setIssuesFunction }) {
                 <Col span={4}>Acciones</Col>
                 <Col span={4}>Estado</Col>
             </Row>
-            {issueList.map(({ ref: { "@ref": { id } }, data: { email, operationNumber, priority, sentDate, resolvedUploadedImages, state, description, seenDate, tags, comment } }) => (
+            {issueList.map(({
+                ref:
+                {
+                    "@ref":
+                    { id }
+                },
+                data:
+                {
+                    email,
+                    operationNumber,
+                    priority,
+                    sentDate,
+                    resolvedUploadedImages,
+                    state,
+                    description,
+                    seenDate,
+                    tags,
+                    comment,
+                    solvedDate
+                }
+            }) => (
                 <IssueMapComponent
                     key={id}
                     id={id}
@@ -28,7 +48,8 @@ function IssueListComponent({ issueList, setIssuesFunction }) {
                     seenDate={seenDate}
                     setIssuesFunction={setIssuesFunction}
                     tags={tags}
-                    comment={comment} />
+                    comment={comment}
+                    solvedDate={solvedDate} />
             ))}
         </div>
     )

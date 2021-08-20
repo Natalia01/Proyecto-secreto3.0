@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styles from '/styles/Panel.module.css'
 import IssueDetailsComponent from './IssueDetailsComponent'
 
-const IssueMapComponent = ({ email, id, operationNumber, sentDate, resolvedUploadedImages, state, priority, description, seenDate, setIssuesFunction, tags, comment }) => {
+const IssueMapComponent = ({ email, id, operationNumber, sentDate, resolvedUploadedImages, state, priority, description, seenDate, setIssuesFunction, tags, comment, solvedDate }) => {
     const [visible, setVisible] = useState(false)
     const apiRequest = { email, id, operationNumber, sentDate, resolvedUploadedImages, state, priority, description, seenDate, tags }
     return (
@@ -39,7 +39,17 @@ const IssueMapComponent = ({ email, id, operationNumber, sentDate, resolvedUploa
                 <Col span={4}>
                     {state}
                 </Col>
-                {visible && <IssueDetailsComponent tags={tags} key={id} email={email} resolvedUploadedImages={resolvedUploadedImages} description={description} comment={comment} />}
+                {visible
+                    &&
+                    <IssueDetailsComponent
+                        tags={tags}
+                        key={id}
+                        email={email}
+                        resolvedUploadedImages={resolvedUploadedImages}
+                        description={description}
+                        comment={comment}
+                        seenDate={seenDate}
+                        solvedDate={solvedDate} />}
             </Row>
         </>
     )
