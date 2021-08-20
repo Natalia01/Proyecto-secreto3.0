@@ -34,7 +34,7 @@ const IssuesTable = ({ setIssuesFunction, setActiveIssue, activeIssue, data }) =
         <>
           {tags.map(tag => {
             let color = tag.length > 7 ? 'geekblue' : 'green';
-            if (tag === 'Customer') {
+            if (tag === 'Finanzas') {
               color = 'volcano';
             }
             return (

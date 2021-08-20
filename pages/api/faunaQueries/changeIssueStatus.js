@@ -1,7 +1,13 @@
 import { client, q } from '../../config/db';
 
 export default async function changeStatus(req, res) {
-    const format = { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }
+    const format = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    }
     const {
         activeReviewedIssue:
         {
@@ -15,7 +21,8 @@ export default async function changeStatus(req, res) {
             state,
             priority,
             description,
-            tags
+            tags,
+            comment
         },
         issueState } = JSON.parse(req.body)
     let seenFormattedDate = seenDate
@@ -42,7 +49,8 @@ export default async function changeStatus(req, res) {
                         state: issueState,
                         seenDate: seenFormattedDate ? seenFormattedDate : '',
                         tags: tags,
-                        solvedDate: solvedFormattedDate ? solvedFormattedDate : ''
+                        solvedDate: solvedFormattedDate ? solvedFormattedDate : '',
+                        comment: comment
                     }
                 }
             )

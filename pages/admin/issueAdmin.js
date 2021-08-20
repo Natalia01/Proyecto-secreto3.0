@@ -31,7 +31,6 @@ const IssueAdmin = () => {
       <Row>
         <Col span={16}>
           <Checkbox onChange={() => {
-            console.log(issueList)
             setShowSolvedState(!showSolvedState)
             setIssuesFunction()
           }}>
@@ -48,7 +47,6 @@ const IssueAdmin = () => {
             setCommentState={setCommentState} />
           <Button onClick={async () => {
             const apiRequest = { activeIssue, commentState }
-            console.log({ apiRequest })
             await fetch('../api/faunaQueries/commentIssue', {
               method: 'POST',
               body: JSON.stringify(apiRequest)

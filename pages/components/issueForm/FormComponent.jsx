@@ -13,6 +13,8 @@ import TagsComponent from './TagsComponent'
 
 const FormComponent = ({ handleLogout }) => {
     const { values, handleChange, handleSubmit, setFieldValue } = useFormikContext()
+    let validation
+    if (values.operationNumber == '' || values.priority == '' || values.description == '' || values.tags.length === 0) { validation = true } else { validation = false }
     const onRadio = e => { //maneja  'manualmente' el cambio de estado de los botones radio
         values.priority = e
         handleChange
@@ -62,6 +64,7 @@ const FormComponent = ({ handleLogout }) => {
                     {pictureUploader}
                 </Field>
                 <SubmitButtonComponent
+                    validation={validation}
                     onSubmit={handleSubmit} />
             </Form>
         </div>
