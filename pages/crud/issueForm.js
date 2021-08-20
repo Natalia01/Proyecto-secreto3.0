@@ -22,7 +22,7 @@ function issueForm() {
     const setIssuesFunction = async () => //esta es la función que actualiza la lista
         await axios.get('../api/faunaQueries/getIssuesByUser',
             { params: { email: activeUser.toString() } })
-            .then(res => setIssueList(res.data.data))
+            .then(res => setIssueList(res.data.data.reverse()))
     useEffect(() => { //para que la lista de problemas se actualice cada vez que se envía un nuevo problema
         setIssuesFunction()
     }, [])
@@ -50,7 +50,8 @@ function issueForm() {
                         state: 'Enviado',
                         comment: '',
                         seenDate: '',
-                        tags: []
+                        tags: [],
+                        solvedDate: ''
                     }}
                     onSubmit={submit}>
                     <FormComponent handleLogout={handleLogout} />

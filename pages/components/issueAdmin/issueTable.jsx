@@ -1,9 +1,6 @@
 import { Table, Tag, Space } from 'antd';
 import React from 'react';
 import 'antd/dist/antd.css';
-import Link from 'next/link'
-import { Alert } from 'antd';
-import { DatePicker } from 'antd';
 import styles from '../../../styles/Panel.module.css'
 
 const IssuesTable = ({ setIssuesFunction, setActiveIssue, activeIssue, data }) => {

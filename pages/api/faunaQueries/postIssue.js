@@ -6,7 +6,7 @@ cloudinary.config({
   api_secret: '7OhrSLDoNqVYYFI12a-NLdIMLME'
 })
 export default async (req, res) => {
-  const { email, operationNumber, priority, description, images, state, seenDate, tags } = JSON.parse(req.body)
+  const { email, operationNumber, priority, description, images, state, seenDate, tags, solvedDate } = JSON.parse(req.body)
   const uploadedImages = images.map(async imageToUpload => {
     const imageResult = await cloudinary.uploader.upload(imageToUpload, () => { })
     const { url, public_id } = imageResult
@@ -28,7 +28,8 @@ export default async (req, res) => {
           resolvedUploadedImages,
           state,
           seenDate,
-          tags
+          tags,
+          solvedDate
         }
       })
     ).then(() => res.json())
