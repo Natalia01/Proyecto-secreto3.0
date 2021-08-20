@@ -5,15 +5,23 @@ import moment from 'moment';
 import CardsDetails from '../components/issueAdmin/cardsDetails';
 import IssuesTable from '../components/issueAdmin/issueTable';
 import ButtonProblemasCheck from '../components/issueAdmin/ButtonProblems'
-import { Row, Col, Table, Tag, Space, Button } from 'antd';
+import { Row, Col, Table, Tag, Space, Button, Checkbox } from 'antd';
 import axios from 'axios';
 
 const IssueAdmin = () => {
+  const CheckboxGroup = Checkbox.Group
   const [issueList, setIssueList] = useState([])
   const [activeIssue, setActiveIssue] = useState({})
   const [commentState, setCommentState] = useState()
+  const [showSolvedState, setShowSolvedState] = useState()
   const setIssuesFunction = async () => await axios.get('../api/faunaQueries/getAllIssues')
-    .then(res => setIssueList(res.data.data.reverse()))
+    .then(res =>
+      showSolvedState ?
+        setIssueList(res.data.data.filter(
+          ({ data: { state } }) =>
+            state != 'Solucionado')
+          .reverse())
+        : setIssueList(res.data.data.reverse()))
   useEffect(() => {
     setIssuesFunction()
   }, [])
@@ -22,6 +30,13 @@ const IssueAdmin = () => {
     <div className="cards">
       <Row>
         <Col span={16}>
+          <Checkbox onChange={() => {
+            console.log(issueList)
+            setShowSolvedState(!showSolvedState)
+            setIssuesFunction()
+          }}>
+            ¿Mostrar problemas solucionados?
+          </Checkbox>
           <IssuesTable
             setIssuesFunction={setIssuesFunction}
             setActiveIssue={setActiveIssue}
